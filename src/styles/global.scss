@@ -1,0 +1,26 @@
+// 全局样式
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// 修改 Ant Design 的一些默认样式
+.ant-layout {
+  background: #f0f2f5;
+}
+
+// 隐藏滚动条但保留滚动预览（可选）
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
