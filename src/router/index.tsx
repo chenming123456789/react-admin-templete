@@ -5,6 +5,7 @@ import Dashboard from '@/pages/Dashboard';
 import UserManagement from '@/pages/User';
 import RoleManagement from '@/pages/Role';
 import Profile from '@/pages/Profile';
+import Test from '@/pages/Test';
 import Registration from '@/pages/Medical/Registration';
 import Billing from '@/pages/Medical/Billing';
 import NotFound from '@/pages/NotFound';
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: 'profile',
         element: <Profile />,
+      },
+      {
+        path: 'test',
+        element: <Test />,
       },
       {
         path: 'medical/registration',

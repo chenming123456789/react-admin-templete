@@ -55,6 +55,11 @@ const MainLayout: React.FC = () => {
       icon: <SettingOutlined />,
       label: '个人中心',
     },
+    {
+      key: '/test',
+      icon: <SettingOutlined />,
+      label: '测试',
+    },
   ];
 
   const userMenuItems = [
@@ -78,9 +83,9 @@ const MainLayout: React.FC = () => {
   return (
     <Layout style={{ height: '100vh', overflow: 'hidden' }}>
       <Sider trigger={null} collapsible collapsed={collapsed} theme="dark">
-        <div style={{ 
-          height: 32, 
-          margin: 16, 
+        <div style={{
+          height: 32,
+          margin: 16,
           background: 'rgba(255, 255, 255, 0.2)',
           display: 'flex',
           alignItems: 'center',
