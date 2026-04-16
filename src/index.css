@@ -32,3 +32,8 @@ html, body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* 减小表格行的高度 */
+.ant-table-cell {
+  padding: 8px 12px !important;
+}
