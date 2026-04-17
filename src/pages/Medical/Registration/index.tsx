@@ -3,32 +3,23 @@ import {
   Table,
   Tag,
   Space,
-  Card,
   Button,
   Input,
   Tabs,
   Badge,
-  Avatar,
   Progress,
   Pagination,
-  Layout,
   Typography,
-  Divider,
-  theme,
 } from "antd";
 import {
-  UserOutlined,
-  CalendarOutlined,
   LeftOutlined,
   RightOutlined,
   SearchOutlined,
   PlusOutlined,
   EllipsisOutlined,
-  TeamOutlined,
 } from "@ant-design/icons";
 
-const { Header, Content, Sider } = Layout;
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 // --- Types ---
 interface PatientRecord {
@@ -62,7 +53,6 @@ interface DoctorInfo {
 }
 
 const Registration: React.FC = () => {
-  const { token } = theme.useToken();
   const [activeTab, setActiveTab] = useState("1");
   const [activeStatus, setActiveStatus] = useState("1");
   const [selectedDoctorId, setSelectedDoctorId] = useState("all");
@@ -200,7 +190,7 @@ const Registration: React.FC = () => {
   // 根据当前标签获取对应的人员列表
   const currentStaffList = activeTab === "1" ? doctors : therapists;
   // 根据选中的医生/理疗师和状态筛选患者数据
-  const filteredPatientData = patientData.filter((patient) => {
+  const filteredPatientData = patientData.filter(() => {
     // 这里可以根据实际需求添加筛选逻辑
     return true;
   });
@@ -251,7 +241,7 @@ const Registration: React.FC = () => {
       key: "progress",
       render: (p: PatientRecord["progress"]) => (
         <div style={{ width: 120 }}>
-          <Text size="small" type="secondary">
+          <Text type="secondary">
             {p.name} {p.current}/{p.total}...
           </Text>
           <Progress
@@ -288,7 +278,7 @@ const Registration: React.FC = () => {
       render: (val: string) => (
         <Text>
           {val}{" "}
-          <Text type="secondary" size="small">
+          <Text type="secondary">
             待收费
           </Text>
         </Text>
@@ -311,7 +301,7 @@ const Registration: React.FC = () => {
   ];
 
   return (
-    <div style={{ minHeight: "100%", background: "#fff", overflow: "hidden" }}>
+    <div style={{ height: "100%", background: "#fff", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       {/* --- Header --- */}
       <div
         style={{
@@ -319,6 +309,7 @@ const Registration: React.FC = () => {
           padding: "0 20px",
           borderBottom: "1px solid #f0f0f0",
           height: 48,
+          flexShrink: 0,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -351,7 +342,7 @@ const Registration: React.FC = () => {
       </div>
 
       {/* --- Main Content --- */}
-      <div style={{ display: "flex", minHeight: "calc(100vh - 168px)" }}>
+      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
         {/* --- Left Sidebar: Doctors --- */}
         <div
           style={{

@@ -3,11 +3,9 @@ import { Layout, Menu, theme, Button, Dropdown, Avatar } from 'antd';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  DashboardOutlined,
   UserOutlined,
   SettingOutlined,
   LogoutOutlined,
-  SafetyCertificateOutlined,
   MedicineBoxOutlined,
   ReconciliationOutlined,
 } from '@ant-design/icons';
@@ -129,7 +127,7 @@ const MainLayout: React.FC = () => {
             flex: 1,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
-            overflow: 'auto'
+            overflow: location.pathname === '/medical/registration' ? 'hidden' : 'auto'
           }}
         >
           <Outlet />
