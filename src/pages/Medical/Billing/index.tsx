@@ -23,6 +23,7 @@ import {
   SearchOutlined,
   CreditCardOutlined
 } from '@ant-design/icons';
+import styles from './index.module.scss';
 
 const { Title, Text } = Typography;
 
@@ -107,19 +108,27 @@ const Billing: React.FC = () => {
   ];
 
   return (
-    <div style={{ padding: '0px' }}>
-      <Row gutter={16} style={{ marginBottom: 24 }}>
+    <div className={styles.billingWrapper}>
+      <Row gutter={16} className={styles.statsRow}>
         <Col span={6}>
-          <Card bordered={false}><Statistic title="今日总收入" value={12850.50} precision={2} prefix="￥" valueStyle={{ color: '#3f8600' }} /></Card>
+          <Card bordered={false}>
+            <Statistic title="今日总收入" value={12850.50} precision={2} prefix="￥" valueStyle={{ color: '#3f8600' }} />
+          </Card>
         </Col>
         <Col span={6}>
-          <Card bordered={false}><Statistic title="待结算单数" value={12} prefix={<CalculatorOutlined />} /></Card>
+          <Card bordered={false}>
+            <Statistic title="待结算单数" value={12} prefix={<CalculatorOutlined />} />
+          </Card>
         </Col>
         <Col span={6}>
-          <Card bordered={false}><Statistic title="已退费笔数" value={2} valueStyle={{ color: '#cf1322' }} /></Card>
+          <Card bordered={false}>
+            <Statistic title="已退费笔数" value={2} valueStyle={{ color: '#cf1322' }} />
+          </Card>
         </Col>
         <Col span={6}>
-          <Card bordered={false}><Statistic title="平均客单价" value={245.8} precision={2} prefix="￥" /></Card>
+          <Card bordered={false}>
+            <Statistic title="平均客单价" value={245.8} precision={2} prefix="￥" />
+          </Card>
         </Col>
       </Row>
 
@@ -130,12 +139,12 @@ const Billing: React.FC = () => {
             bordered={false} 
             extra={<Button type="primary" icon={<PlusOutlined />} onClick={handleAddItem}>添加收费项</Button>}
           >
-            <div style={{ marginBottom: 24 }}>
+            <div className={styles.searchSection}>
               <Space>
                 <Input 
                   placeholder="搜索患者就诊号/手机号" 
                   prefix={<SearchOutlined />} 
-                  style={{ width: 300 }}
+                  className={styles.patientInput}
                   value={patientSearch}
                   onChange={e => setPatientSearch(e.target.value)}
                 />
@@ -149,27 +158,27 @@ const Billing: React.FC = () => {
 
         <Col span={8}>
           <Card title="结算中心" bordered={false}>
-            <div style={{ padding: '8px 0' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+            <div className={styles.settlementSection}>
+              <div className={styles.summaryRow}>
                 <Text type="secondary">项目总额</Text>
                 <Text>￥{subtotal.toFixed(2)}</Text>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+              <div className={styles.discountRow}>
                 <Text type="secondary">优惠减免</Text>
                 <Text type="danger">-￥{discount.toFixed(2)}</Text>
               </div>
               <Divider dashed />
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 24 }}>
-                <Title level={4} style={{ margin: 0 }}>应收合计</Title>
-                <Title level={3} style={{ margin: 0, color: '#f5222d' }}>￥{total.toFixed(2)}</Title>
+              <div className={styles.totalRow}>
+                <Title level={4} className={styles.totalLabel}>应收合计</Title>
+                <Title level={3} className={styles.totalAmount}>￥{total.toFixed(2)}</Title>
               </div>
 
-              <div style={{ marginBottom: 24 }}>
-                <Text strong style={{ display: 'block', marginBottom: 8 }}>支付方式</Text>
-                <Radio.Group value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)} buttonStyle="solid" style={{ width: '100%' }}>
-                  <Radio.Button value="cash" style={{ width: '33.3%' }}>现金</Radio.Button>
-                  <Radio.Button value="wechat" style={{ width: '33.3%' }}>微信</Radio.Button>
-                  <Radio.Button value="alipay" style={{ width: '33.3%' }}>支付宝</Radio.Button>
+              <div className={styles.paymentSection}>
+                <Text strong className={styles.paymentLabel}>支付方式</Text>
+                <Radio.Group value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)} buttonStyle="solid" className={styles.paymentGroup}>
+                  <Radio.Button value="cash" className={styles.paymentBtn}>现金</Radio.Button>
+                  <Radio.Button value="wechat" className={styles.paymentBtn}>微信</Radio.Button>
+                  <Radio.Button value="alipay" className={styles.paymentBtn}>支付宝</Radio.Button>
                 </Radio.Group>
               </div>
 
@@ -179,10 +188,10 @@ const Billing: React.FC = () => {
             </div>
           </Card>
           
-          <Card bordered={false} style={{ marginTop: 16 }}>
+          <Card bordered={false} className={styles.reminderCard}>
             <Title level={5}><MedicineBoxOutlined /> 医生开药提醒</Title>
-            <Text type="secondary" size="small">患者有 2 项待执行的处置项目尚未计费，请确认是否同步。</Text>
-            <Button type="link" ghost style={{ padding: 0, marginTop: 8 }}>查看待同步项目</Button>
+            <Text type="secondary">患者有 2 项待执行的处置项目尚未计费，请确认是否同步。</Text>
+            <Button type="link" ghost className={styles.reminderLink}>查看待同步项目</Button>
           </Card>
         </Col>
       </Row>

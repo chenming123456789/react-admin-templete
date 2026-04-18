@@ -18,6 +18,7 @@ import {
   PlusOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
+import styles from "./index.module.scss";
 
 const { Text } = Typography;
 
@@ -204,7 +205,7 @@ const Registration: React.FC = () => {
       render: (text: string) => (
         <Space>
           <Badge status="processing" color="#d9d9d9" />
-          <Text style={{ color: "#1890ff", cursor: "pointer" }}>{text}</Text>
+          <Text className={styles.patientLink}>{text}</Text>
         </Space>
       ),
     },
@@ -218,20 +219,11 @@ const Registration: React.FC = () => {
       render: (tags: string[]) => (
         <Space size={[0, 4]} wrap>
           {tags.map((t) => (
-            <Tag
-              key={t}
-              color="green"
-              style={{
-                borderRadius: 10,
-                background: "#f6ffed",
-                borderColor: "#b7eb8f",
-                color: "#52c41a",
-              }}
-            >
+            <Tag key={t} color="green" className={styles.tagPill}>
               {t}
             </Tag>
           ))}
-          <EllipsisOutlined style={{ color: "#999" }} />
+          <EllipsisOutlined className={styles.ellipsisIcon} />
         </Space>
       ),
     },
@@ -240,7 +232,7 @@ const Registration: React.FC = () => {
       dataIndex: "progress",
       key: "progress",
       render: (p: PatientRecord["progress"]) => (
-        <div style={{ width: 120 }}>
+        <div className={styles.progressCell}>
           <Text type="secondary">
             {p.name} {p.current}/{p.total}...
           </Text>
@@ -258,7 +250,7 @@ const Registration: React.FC = () => {
       dataIndex: "status",
       key: "status",
       render: (status: string) => (
-        <Text style={{ color: "#fa8c16" }}>{status}</Text>
+        <Text className={styles.statusText}>{status}</Text>
       ),
     },
     {
@@ -266,7 +258,7 @@ const Registration: React.FC = () => {
       dataIndex: "isNew",
       key: "isNew",
       render: (isNew: boolean) => (
-        <Tag color="cyan" style={{ borderRadius: 4 }}>
+        <Tag color="cyan" className={styles.visitTag}>
           {isNew ? "初诊" : "复诊"}
         </Tag>
       ),
@@ -289,10 +281,10 @@ const Registration: React.FC = () => {
       key: "action",
       render: () => (
         <Space size="middle">
-          <Button type="link" style={{ padding: 0 }}>
+          <Button type="link" className={styles.actionLink}>
             协作板
           </Button>
-          <Button type="link" style={{ padding: 0 }}>
+          <Button type="link" className={styles.actionLink}>
             更多
           </Button>
         </Space>
@@ -301,23 +293,9 @@ const Registration: React.FC = () => {
   ];
 
   return (
-    <div style={{ height: "100%", background: "#fff", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div className={`${styles.registrationWrapper} registration-page`}>
       {/* --- Header --- */}
-      <div
-        style={{
-          background: "#fff",
-          padding: "0 20px",
-          borderBottom: "1px solid #f0f0f0",
-          height: 48,
-          flexShrink: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-        }}
-      >
+      <div className={styles.headerBar}>
         <Tabs
           activeKey={activeTab}
           onChange={setActiveTab}
@@ -326,68 +304,36 @@ const Registration: React.FC = () => {
             { key: "2", label: "理疗" },
           ]}
         />
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <Button type="link" style={{ color: "#1890ff" }}>
+        <div className={styles.headerRight}>
+          <Button type="link" className={styles.scheduleLink}>
             排班
           </Button>
           <Space>
             <Button size="small">回到今天</Button>
             <Space>
-              <LeftOutlined style={{ fontSize: 12, cursor: "pointer" }} />
+              <LeftOutlined className={styles.dateNav} />
               <Text strong>2026-04-11</Text>
-              <RightOutlined style={{ fontSize: 12, cursor: "pointer" }} />
+              <RightOutlined className={styles.dateNav} />
             </Space>
           </Space>
         </div>
       </div>
 
       {/* --- Main Content --- */}
-      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+      <div className={styles.mainContent}>
         {/* --- Left Sidebar: Doctors --- */}
-        <div
-          style={{
-            width: 200,
-            background: "#f7f9fb",
-            borderRight: "1px solid #f0f0f0",
-            padding: "12px",
-          }}
-        >
+        <div className={styles.sidebar}>
           {currentStaffList.map((doc) => (
             <div
               key={doc.id}
-              style={{
-                marginBottom: 8,
-                padding: "12px",
-                borderRadius: 4,
-                border:
-                  doc.id === selectedDoctorId
-                    ? "1px solid #1890ff"
-                    : "1px solid #f0f0f0",
-                background: doc.id === selectedDoctorId ? "#e6f7ff" : "#fff",
-                cursor: "pointer",
-              }}
+              className={`${styles.doctorCard} ${doc.id === selectedDoctorId ? styles.active : ''}`}
               onClick={() => setSelectedDoctorId(doc.id)}
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: 8,
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center" }}>
+              <div className={styles.doctorHeader}>
+                <div className={styles.doctorName}>
                   <Text strong>{doc.name}</Text>
                   {doc.status && (
-                    <Tag
-                      color="error"
-                      style={{
-                        marginLeft: 8,
-                        borderRadius: 10,
-                        fontSize: 12,
-                        padding: "0 6px",
-                      }}
-                    >
+                    <Tag color="error" className={styles.statusTag}>
                       {doc.status}
                     </Tag>
                   )}
@@ -395,31 +341,23 @@ const Registration: React.FC = () => {
                 <Button
                   size="small"
                   type="link"
-                  style={{
-                    color: doc.id === selectedDoctorId ? "#1890ff" : "#666",
-                  }}
+                  className={doc.id === selectedDoctorId ? styles.active : styles.inactive}
                 >
                   挂号
                 </Button>
               </div>
-              <div style={{ fontSize: 12, color: "#666" }}>
+              <div className={styles.doctorCounters}>
                 共:{doc.counters.total} 待签:{doc.counters.pendingSign} 已诊:
                 {doc.counters.completed}
               </div>
             </div>
           ))}
 
-          <div
-            style={{
-              marginTop: 24,
-              paddingTop: 12,
-              borderTop: "1px solid #e8e8e8",
-            }}
-          >
+          <div className={styles.toolsSection}>
             <Button
               type="link"
               block
-              style={{ textAlign: "left", padding: 0, color: "#666" }}
+              className={styles.toolsLink}
             >
               小工具
             </Button>
@@ -427,16 +365,9 @@ const Registration: React.FC = () => {
         </div>
 
         {/* --- Right Content: Patient Table --- */}
-        <div style={{ flex: 1, padding: "16px" }}>
+        <div className={styles.tableContent}>
           {/* --- Status Tabs --- */}
-          <div
-            style={{
-              marginBottom: 16,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <div className={styles.statusBar}>
             <Tabs
               activeKey={activeStatus}
               onChange={setActiveStatus}
@@ -454,8 +385,8 @@ const Registration: React.FC = () => {
             <Space>
               <Input
                 placeholder="输入姓名或手机号搜索"
-                prefix={<SearchOutlined style={{ color: "#ccc" }} />}
-                style={{ width: 220, borderRadius: 20 }}
+                prefix={<SearchOutlined className={styles.searchIcon} />}
+                className={styles.searchInput}
               />
               <Text type="secondary">等级筛选</Text>
               <Space size={4}>
@@ -467,7 +398,7 @@ const Registration: React.FC = () => {
               <Button
                 type="primary"
                 icon={<PlusOutlined />}
-                style={{ borderRadius: 6, background: "#1890ff" }}
+                className={styles.collaborateBtn}
               >
                 协作板
               </Button>
@@ -481,38 +412,10 @@ const Registration: React.FC = () => {
             pagination={{ size: "small", total: filteredPatientData.length }}
             size="middle"
             rowClassName={() => "custom-table-row"}
-            style={{ marginBottom: 16 }}
           />
 
-          {/* --- Bottom Info --- */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-              <Text type="secondary">共 {filteredPatientData.length} 条</Text>
-              <Button type="link" style={{ color: "#1890ff" }}>
-                叫号器
-              </Button>
-              <Button type="link" style={{ color: "#1890ff" }}>
-                下一位 &gt;
-              </Button>
-            </div>
-            <Pagination size="small" total={filteredPatientData.length} />
-          </div>
         </div>
       </div>
-
-      <style>{`
-        .ant-tabs-nav::before { border-bottom: none !important; }
-        .ant-tabs-tab-active { font-weight: bold; }
-        .custom-table-row:hover { background-color: #f0f7ff !important; }
-        .ant-table-thead > tr > th { background: #f7f9fb !important; color: #666 !important; font-weight: normal !important; }
-        .ant-table { margin-bottom: 0 !important; }
-      `}</style>
     </div>
   );
 };

@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useUserStore } from '@/store/useUserStore';
+import styles from './MainLayout.module.scss';
 
 const { Header, Sider, Content } = Layout;
 
@@ -78,21 +79,12 @@ const MainLayout: React.FC = () => {
     },
   ];
 
+  const isRegistrationPage = location.pathname === '/medical/registration';
+
   return (
-    <Layout style={{ height: '100vh', overflow: 'hidden' }}>
+    <Layout className={styles.layoutRoot}>
       <Sider trigger={null} collapsible collapsed={collapsed} theme="dark">
-        <div style={{
-          height: 32,
-          margin: 16,
-          background: 'rgba(255, 255, 255, 0.2)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#fff',
-          fontWeight: 'bold',
-          whiteSpace: 'nowrap',
-          overflow: 'hidden'
-        }}>
+        <div className={styles.logo}>
           {collapsed ? 'RA' : 'React Admin'}
         </div>
         <Menu
@@ -104,30 +96,27 @@ const MainLayout: React.FC = () => {
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Header className={styles.header} style={{ background: colorBgContainer }}>
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
-            style={{ fontSize: '16px', width: 64, height: 64 }}
+            className={styles.collapseBtn}
           />
-          <div style={{ paddingRight: 24 }}>
+          <div className={styles.userArea}>
             <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
-              <span style={{ cursor: 'pointer' }}>
-                <Avatar style={{ backgroundColor: '#1890ff', marginRight: 8 }} src={userInfo?.avatar} icon={!userInfo?.avatar && <UserOutlined />} />
+              <span className={styles.userDropdown}>
+                <Avatar className={styles.avatar} src={userInfo?.avatar} icon={!userInfo?.avatar && <UserOutlined />} />
                 {userInfo?.username || '管理员'}
               </span>
             </Dropdown>
           </div>
         </Header>
         <Content
+          className={`${styles.content} ${isRegistrationPage ? styles.contentHidden : styles.contentAuto}`}
           style={{
-            margin: '24px 16px',
-            padding: 24,
-            flex: 1,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
-            overflow: location.pathname === '/medical/registration' ? 'hidden' : 'auto'
           }}
         >
           <Outlet />

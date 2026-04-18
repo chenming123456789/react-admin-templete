@@ -1,10 +1,11 @@
 import React from 'react';
 import { Card, Row, Col, Statistic } from 'antd';
 import { UserOutlined, ShoppingCartOutlined, BarChartOutlined } from '@ant-design/icons';
+import styles from './index.module.scss';
 
 const Dashboard: React.FC = () => {
   return (
-    <div style={{ padding: '24px' }}>
+    <div className={styles.dashboardWrapper}>
       <Row gutter={16}>
         <Col span={8}>
           <Card bordered={false}>
@@ -22,7 +23,7 @@ const Dashboard: React.FC = () => {
           </Card>
         </Col>
       </Row>
-      <Card title="最近动态" style={{ marginTop: '24px' }} bordered={false}>
+      <Card title="最近动态" className={styles.recentCard} bordered={false}>
         欢迎来到 React Admin 后台管理系统。
       </Card>
     </div>

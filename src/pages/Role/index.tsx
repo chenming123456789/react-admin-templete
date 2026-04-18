@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Input, Space, Card, Modal, Form, message, Tag, Popconfirm } from 'antd';
 import { PlusOutlined, SearchOutlined, EditOutlined, DeleteOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
+import styles from './index.module.scss';
 
 interface RoleItem {
   id: string;
@@ -58,7 +59,7 @@ const RoleManagement: React.FC = () => {
 
   return (
     <Card bordered={false}>
-      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
+      <div className={styles.toolbar}>
         <Space>
           <Input placeholder="搜索角色名称" prefix={<SearchOutlined />} />
           <Button type="primary">搜索</Button>

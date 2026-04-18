@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Input, Space, Card, Modal, Form, message, Tag, Popconfirm } from 'antd';
 import { PlusOutlined, SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import styles from './index.module.scss';
 
 interface UserItem {
   id: string;
@@ -108,16 +109,16 @@ const UserManagement: React.FC = () => {
   ];
 
   return (
-    <div style={{ padding: '0px' }}>
+    <div className={styles.userWrapper}>
       <Card bordered={false}>
-        <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
+        <div className={styles.toolbar}>
           <Space>
             <Input 
               placeholder="搜索用户名" 
               prefix={<SearchOutlined />} 
               value={searchText}
               onChange={e => setSearchText(e.target.value)}
-              style={{ width: 200 }} 
+              className={styles.searchInput}
             />
             <Button type="primary" onClick={fetchList}>搜索</Button>
           </Space>
