@@ -1,0 +1,27 @@
+// 面包屑导航样式
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #8c8c8c;
+  flex-shrink: 0;
+}
+
+.separator {
+  font-size: 10px;
+  color: #bfbfbf;
+}
+
+.crumbItem {
+  color: #8c8c8c;
+  cursor: default;
+  transition: color 0.2s;
+}
+
+.crumbItemActive {
+  color: #262626;
+  font-weight: 500;
+}

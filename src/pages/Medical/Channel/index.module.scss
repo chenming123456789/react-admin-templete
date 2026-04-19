@@ -1,0 +1,130 @@
+// 渠道管理页面样式
+
+// ========== 页面容器 ==========
+.channelPage {
+  // 页面无需额外 padding，由 Content 提供
+}
+
+// ========== 搜索筛选区域 ==========
+.searchArea {
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.searchRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.searchInput {
+  width: 240px;
+}
+
+.searchSelect {
+  width: 160px;
+}
+
+.searchSelectWide {
+  width: 200px;
+}
+
+.searchDateRange {
+  width: 260px;
+}
+
+// ========== 操作按钮区域 ==========
+.actionArea {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.alertNotice {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff7e6;
+  border: 1px solid #ffd591;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: #595959;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: #fa8c16;
+    background: #fff2e0;
+  }
+}
+
+.alertNoticeIcon {
+  color: #fa8c16;
+  font-size: 14px;
+}
+
+.alertNoticeCount {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+// ========== 表格 ==========
+.dataTable {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.nameLink {
+  color: #262626;
+  cursor: pointer;
+
+  &:hover {
+    color: #1890ff;
+  }
+}
+
+// 操作列分隔符
+.actionDivider {
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background: #e8e8e8;
+  margin: 0 2px;
+  vertical-align: middle;
+}
+
+.actionBtn {
+  padding: 0 4px !important;
+  font-size: 12px !important;
+  color: #1890ff !important;
+}
+
+.actionBtnOrange {
+  padding: 0 4px !important;
+  font-size: 12px !important;
+  color: #fa8c16 !important;
+}
+
+.actionBtnGreen {
+  padding: 0 4px !important;
+  font-size: 12px !important;
+  color: #52c41a !important;
+}
+
+.actionBtnDanger {
+  padding: 0 4px !important;
+  font-size: 12px !important;
+}

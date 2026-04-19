@@ -10,15 +10,19 @@ html, body, #root {
   background: #f0f2f5;
 }
 
-// 隐藏滚动条但保留滚动预览（可选）
+// 自定义滚动条样式（全局统一）
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: #d9d9d9;
   border-radius: 3px;
+
+  &:hover {
+    background: #bfbfbf;
+  }
 }
 
 ::-webkit-scrollbar-track {
