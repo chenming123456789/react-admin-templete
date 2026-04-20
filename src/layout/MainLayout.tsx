@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Layout, Menu, Dropdown, Avatar, Select } from 'antd';
+import React, { useState, useEffect, useCallback } from "react";
+import { Layout, Menu, Dropdown, Avatar, Select } from "antd";
 import {
   UserOutlined,
   SettingOutlined,
@@ -11,12 +11,12 @@ import {
   SafetyOutlined,
   ExperimentOutlined,
   ApartmentOutlined
-} from '@ant-design/icons';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { useUserStore } from '@/store/useUserStore';
-import TabBar from '@/components/TabBar';
-import BreadcrumbNav from '@/components/BreadcrumbNav';
-import styles from './MainLayout.module.scss';
+} from "@ant-design/icons";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { useUserStore } from "@/store/useUserStore";
+import TabBar from "@/components/TabBar";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import styles from "./MainLayout.module.scss";
 
 const { Header, Sider, Content } = Layout;
 
@@ -28,14 +28,14 @@ export const routeMetaMap: Record<
   string,
   { title: string; parentTitle?: string }
 > = {
-  '/dashboard': { title: '工作台' },
-  '/medical/registration': { title: '挂号管理', parentTitle: '医疗业务' },
-  '/medical/billing': { title: '门诊收费', parentTitle: '医疗业务' },
-  '/medical/channel': { title: '渠道管理', parentTitle: '医疗业务' },
-  '/users': { title: '用户管理', parentTitle: '系统管理' },
-  '/roles': { title: '角色管理', parentTitle: '系统管理' },
-  '/profile': { title: '个人中心' },
-  '/test': { title: '测试页面' }
+  "/dashboard": { title: "工作台" },
+  "/medical/registration": { title: "挂号管理", parentTitle: "医疗业务" },
+  "/medical/billing": { title: "门诊收费", parentTitle: "医疗业务" },
+  "/medical/channel": { title: "渠道管理", parentTitle: "医疗业务" },
+  "/users": { title: "用户管理", parentTitle: "系统管理" },
+  "/roles": { title: "角色管理", parentTitle: "系统管理" },
+  "/profile": { title: "个人中心" },
+  "/test": { title: "测试页面" }
 };
 
 /**
@@ -55,9 +55,9 @@ const MainLayout: React.FC = () => {
 
   // Tab 标签页状态
   const [tabs, setTabs] = useState<TabItem[]>([
-    { key: '/dashboard', label: '工作台', closable: false }
+    { key: "/dashboard", label: "工作台", closable: false }
   ]);
-  const [activeTab, setActiveTab] = useState('/dashboard');
+  const [activeTab, setActiveTab] = useState("/dashboard");
 
   // 路由变化时自动添加 Tab
   useEffect(() => {
@@ -70,7 +70,7 @@ const MainLayout: React.FC = () => {
         if (!exists) {
           return [
             ...prevTabs,
-            { key: path, label: meta.title, closable: path !== '/dashboard' }
+            { key: path, label: meta.title, closable: path !== "/dashboard" }
           ];
         }
         return prevTabs;
@@ -106,20 +106,20 @@ const MainLayout: React.FC = () => {
 
   // 关闭其他/全部 Tab
   const handleTabAction = useCallback(
-    (action: 'closeOthers' | 'closeAll' | 'closeRight') => {
+    (action: "closeOthers" | "closeAll" | "closeRight") => {
       setTabs((prevTabs) => {
-        if (action === 'closeAll') {
-          setActiveTab('/dashboard');
-          navigate('/dashboard');
+        if (action === "closeAll") {
+          setActiveTab("/dashboard");
+          navigate("/dashboard");
           return [prevTabs[0]]; // 保留工作台
         }
-        if (action === 'closeOthers') {
+        if (action === "closeOthers") {
           const kept = prevTabs.filter(
             (tab) => !tab.closable || tab.key === activeTab
           );
           return kept;
         }
-        if (action === 'closeRight') {
+        if (action === "closeRight") {
           const activeIndex = prevTabs.findIndex(
             (tab) => tab.key === activeTab
           );
@@ -133,82 +133,82 @@ const MainLayout: React.FC = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   // 左侧菜单配置
   const menuItems = [
     {
-      key: '/dashboard',
+      key: "/dashboard",
       icon: <DashboardOutlined />,
-      label: '工作台'
+      label: "工作台"
     },
     {
-      key: 'medical',
+      key: "medical",
       icon: <MedicineBoxOutlined />,
-      label: '医疗业务',
+      label: "医疗业务",
       children: [
         {
-          key: '/medical/registration',
+          key: "/medical/registration",
           icon: <UserOutlined />,
-          label: '挂号管理'
+          label: "挂号管理"
         },
         {
-          key: '/medical/billing',
+          key: "/medical/billing",
           icon: <ReconciliationOutlined />,
-          label: '门诊收费'
+          label: "门诊收费"
         },
         {
-          key: '/medical/channel',
+          key: "/medical/channel",
           icon: <ApartmentOutlined />,
-          label: '渠道管理'
+          label: "渠道管理"
         }
       ]
     },
     {
-      key: 'system',
+      key: "system",
       icon: <SettingOutlined />,
-      label: '系统管理',
+      label: "系统管理",
       children: [
         {
-          key: '/users',
+          key: "/users",
           icon: <TeamOutlined />,
-          label: '用户管理'
+          label: "用户管理"
         },
         {
-          key: '/roles',
+          key: "/roles",
           icon: <SafetyOutlined />,
-          label: '角色管理'
+          label: "角色管理"
         }
       ]
     },
     {
-      key: '/profile',
+      key: "/profile",
       icon: <UserOutlined />,
-      label: '个人中心'
+      label: "个人中心"
     },
     {
-      key: '/test',
+      key: "/test",
       icon: <ExperimentOutlined />,
-      label: '测试页面'
+      label: "测试页面"
     }
   ];
 
   // 用户下拉菜单
   const userMenuItems = [
     {
-      key: 'profile',
+      key: "profile",
       icon: <UserOutlined />,
-      label: '个人信息',
-      onClick: () => navigate('/profile')
+      label: "个人信息",
+      onClick: () => navigate("/profile")
     },
     {
-      type: 'divider' as const
+      type: "divider" as const
     },
     {
-      key: 'logout',
+      key: "logout",
       icon: <LogoutOutlined />,
-      label: '退出登录',
+      label: "退出登录",
       onClick: handleLogout
     }
   ];
@@ -216,8 +216,8 @@ const MainLayout: React.FC = () => {
   // 获取当前展开的菜单 key（自动展开当前路由所在的父菜单）
   const getDefaultOpenKeys = () => {
     const path = location.pathname;
-    if (path.startsWith('/medical')) return ['medical'];
-    if (path === '/users' || path === '/roles') return ['system'];
+    if (path.startsWith("/medical")) return ["medical"];
+    if (path === "/users" || path === "/roles") return ["system"];
     return [];
   };
 
@@ -232,29 +232,28 @@ const MainLayout: React.FC = () => {
           </div>
           <div className={styles.orgSwitcher}>
             <Select
-              defaultValue='headquarters'
-              variant='borderless'
+              defaultValue="headquarters"
+              variant="borderless"
               popupMatchSelectWidth={false}
               className={styles.orgSelect}
               options={[
-                { value: 'headquarters', label: '总部' },
-                { value: 'branch1', label: '分部一' },
-                { value: 'branch2', label: '分部二' }
+                { value: "headquarters", label: "承启堂" },
+                { value: "branch1", label: "承启堂青羊馆" }
               ]}
             />
           </div>
         </div>
         <div className={styles.headerRight}>
-          <Dropdown menu={{ items: userMenuItems }} placement='bottomRight'>
+          <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
             <span className={styles.userDropdown}>
               <Avatar
                 className={styles.avatar}
-                size='small'
+                size="small"
                 src={userInfo?.avatar}
                 icon={!userInfo?.avatar && <UserOutlined />}
               />
               <span className={styles.username}>
-                {userInfo?.username || '管理员'}
+                {userInfo?.username || "管理员"}
               </span>
             </span>
           </Dropdown>
@@ -266,9 +265,9 @@ const MainLayout: React.FC = () => {
 
       <Layout className={styles.mainBody}>
         {/* ===== 左侧菜单 ===== */}
-        <Sider width={200} className={styles.sider} theme='light'>
+        <Sider width={200} className={styles.sider} theme="light">
           <Menu
-            mode='inline'
+            mode="inline"
             selectedKeys={[location.pathname]}
             defaultOpenKeys={getDefaultOpenKeys()}
             items={menuItems}

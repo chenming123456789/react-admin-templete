@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from "react";
 import {
   Table,
   Card,
@@ -15,15 +15,15 @@ import {
   Radio,
   message,
   InputNumber
-} from 'antd';
+} from "antd";
 import {
   CalculatorOutlined,
   MedicineBoxOutlined,
   PlusOutlined,
   SearchOutlined,
   CreditCardOutlined
-} from '@ant-design/icons';
-import styles from './index.module.scss';
+} from "@ant-design/icons";
+import styles from "./index.module.scss";
 
 const { Title, Text } = Typography;
 
@@ -37,15 +37,15 @@ interface BillingItem {
 
 const Billing: React.FC = () => {
   const [items, setItems] = useState<BillingItem[]>([]);
-  const [paymentMethod, setPaymentMethod] = useState('wechat');
-  const [patientSearch, setPatientSearch] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState("wechat");
+  const [patientSearch, setPatientSearch] = useState("");
 
   // 模拟收费项目库
   const itemLibrary = [
-    { name: '布洛芬缓释胶囊', price: 25.5, category: '西药' },
-    { name: '血常规检查', price: 45.0, category: '检查' },
-    { name: '葡萄糖注射液', price: 12.8, category: '处置' },
-    { name: '雾化治疗', price: 60.0, category: '治疗' }
+    { name: "布洛芬缓释胶囊", price: 25.5, category: "西药" },
+    { name: "血常规检查", price: 45.0, category: "检查" },
+    { name: "葡萄糖注射液", price: 12.8, category: "处置" },
+    { name: "雾化治疗", price: 60.0, category: "治疗" }
   ];
 
   const handleAddItem = () => {
@@ -79,7 +79,7 @@ const Billing: React.FC = () => {
 
   const handleSettle = () => {
     if (items.length === 0) {
-      message.warning('请先添加收费项目');
+      message.warning("请先添加收费项目");
       return;
     }
     message.success(
@@ -89,17 +89,17 @@ const Billing: React.FC = () => {
   };
 
   const columns = [
-    { title: '项目名称', dataIndex: 'name', key: 'name' },
-    { title: '类别', dataIndex: 'category', key: 'category' },
+    { title: "项目名称", dataIndex: "name", key: "name" },
+    { title: "类别", dataIndex: "category", key: "category" },
     {
-      title: '单价',
-      dataIndex: 'price',
-      key: 'price',
+      title: "单价",
+      dataIndex: "price",
+      key: "price",
       render: (v: number) => `￥${v.toFixed(2)}`
     },
     {
-      title: '数量',
-      key: 'quantity',
+      title: "数量",
+      key: "quantity",
       render: (_: any, r: BillingItem) => (
         <InputNumber
           min={1}
@@ -109,16 +109,16 @@ const Billing: React.FC = () => {
       )
     },
     {
-      title: '小计',
-      key: 'total',
+      title: "小计",
+      key: "total",
       render: (_: any, r: BillingItem) =>
         `￥${(r.price * r.quantity).toFixed(2)}`
     },
     {
-      title: '操作',
-      key: 'action',
+      title: "操作",
+      key: "action",
       render: (_: any, record: BillingItem) => (
-        <Button type='link' danger onClick={() => removeItem(record.id)}>
+        <Button type="link" danger onClick={() => removeItem(record.id)}>
           移除
         </Button>
       )
@@ -131,18 +131,18 @@ const Billing: React.FC = () => {
         <Col span={6}>
           <Card bordered={false}>
             <Statistic
-              title='今日总收入'
+              title="今日总收入"
               value={12850.5}
               precision={2}
-              prefix='￥'
-              valueStyle={{ color: '#3f8600' }}
+              prefix="￥"
+              valueStyle={{ color: "#3f8600" }}
             />
           </Card>
         </Col>
         <Col span={6}>
           <Card bordered={false}>
             <Statistic
-              title='待结算单数'
+              title="待结算单数"
               value={12}
               prefix={<CalculatorOutlined />}
             />
@@ -151,19 +151,19 @@ const Billing: React.FC = () => {
         <Col span={6}>
           <Card bordered={false}>
             <Statistic
-              title='已退费笔数'
+              title="已退费笔数"
               value={2}
-              valueStyle={{ color: '#cf1322' }}
+              valueStyle={{ color: "#cf1322" }}
             />
           </Card>
         </Col>
         <Col span={6}>
           <Card bordered={false}>
             <Statistic
-              title='平均客单价'
+              title="平均客单价"
               value={245.8}
               precision={2}
-              prefix='￥'
+              prefix="￥"
             />
           </Card>
         </Col>
@@ -172,11 +172,11 @@ const Billing: React.FC = () => {
       <Row gutter={24}>
         <Col span={16}>
           <Card
-            title='开单工作台'
+            title="开单工作台"
             bordered={false}
             extra={
               <Button
-                type='primary'
+                type="primary"
                 icon={<PlusOutlined />}
                 onClick={handleAddItem}
               >
@@ -187,40 +187,40 @@ const Billing: React.FC = () => {
             <div className={styles.searchSection}>
               <Space>
                 <Input
-                  placeholder='搜索患者就诊号/手机号'
+                  placeholder="搜索患者就诊号/手机号"
                   prefix={<SearchOutlined />}
                   className={styles.patientInput}
                   value={patientSearch}
                   onChange={(e) => setPatientSearch(e.target.value)}
                 />
-                <Button onClick={() => message.info('正在查询患者信息...')}>
+                <Button onClick={() => message.info("正在查询患者信息...")}>
                   查询
                 </Button>
                 {patientSearch && (
-                  <Text type='success'>匹配到患者: 张三 (男, 35岁)</Text>
+                  <Text type="success">匹配到患者: 张三 (男, 35岁)</Text>
                 )}
               </Space>
             </div>
             <Table
               columns={columns}
               dataSource={items}
-              rowKey='id'
+              rowKey="id"
               pagination={false}
-              size='middle'
+              size="middle"
             />
           </Card>
         </Col>
 
         <Col span={8}>
-          <Card title='结算中心' bordered={false}>
+          <Card title="结算中心" bordered={false}>
             <div className={styles.settlementSection}>
               <div className={styles.summaryRow}>
-                <Text type='secondary'>项目总额</Text>
+                <Text type="secondary">项目总额</Text>
                 <Text>￥{subtotal.toFixed(2)}</Text>
               </div>
               <div className={styles.discountRow}>
-                <Text type='secondary'>优惠减免</Text>
-                <Text type='danger'>-￥{discount.toFixed(2)}</Text>
+                <Text type="secondary">优惠减免</Text>
+                <Text type="danger">-￥{discount.toFixed(2)}</Text>
               </div>
               <Divider dashed />
               <div className={styles.totalRow}>
@@ -239,24 +239,24 @@ const Billing: React.FC = () => {
                 <Radio.Group
                   value={paymentMethod}
                   onChange={(e) => setPaymentMethod(e.target.value)}
-                  buttonStyle='solid'
+                  buttonStyle="solid"
                   className={styles.paymentGroup}
                 >
-                  <Radio.Button value='cash' className={styles.paymentBtn}>
+                  <Radio.Button value="cash" className={styles.paymentBtn}>
                     现金
                   </Radio.Button>
-                  <Radio.Button value='wechat' className={styles.paymentBtn}>
+                  <Radio.Button value="wechat" className={styles.paymentBtn}>
                     微信
                   </Radio.Button>
-                  <Radio.Button value='alipay' className={styles.paymentBtn}>
+                  <Radio.Button value="alipay" className={styles.paymentBtn}>
                     支付宝
                   </Radio.Button>
                 </Radio.Group>
               </div>
 
               <Button
-                type='primary'
-                size='large'
+                type="primary"
+                size="large"
                 block
                 icon={<CreditCardOutlined />}
                 onClick={handleSettle}
@@ -271,10 +271,10 @@ const Billing: React.FC = () => {
             <Title level={5}>
               <MedicineBoxOutlined /> 医生开药提醒
             </Title>
-            <Text type='secondary'>
+            <Text type="secondary">
               患者有 2 项待执行的处置项目尚未计费，请确认是否同步。
             </Text>
-            <Button type='link' ghost className={styles.reminderLink}>
+            <Button type="link" ghost className={styles.reminderLink}>
               查看待同步项目
             </Button>
           </Card>

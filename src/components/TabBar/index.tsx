@@ -1,15 +1,15 @@
-import React from 'react';
-import { Dropdown } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
-import type { TabItem } from '@/layout/MainLayout';
-import styles from './index.module.scss';
+import React from "react";
+import { Dropdown } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
+import type { TabItem } from "@/layout/MainLayout";
+import styles from "./index.module.scss";
 
 interface TabBarProps {
   tabs: TabItem[];
   activeTab: string;
   onTabClick: (key: string) => void;
   onTabClose: (key: string) => void;
-  onTabAction: (action: 'closeOthers' | 'closeAll' | 'closeRight') => void;
+  onTabAction: (action: "closeOthers" | "closeAll" | "closeRight") => void;
 }
 
 /**
@@ -27,22 +27,22 @@ const TabBar: React.FC<TabBarProps> = ({
   const getContextMenu = (tabKey: string) => ({
     items: [
       {
-        key: 'closeOthers',
-        label: '关闭其他',
-        onClick: () => onTabAction('closeOthers')
+        key: "closeOthers",
+        label: "关闭其他",
+        onClick: () => onTabAction("closeOthers")
       },
       {
-        key: 'closeRight',
-        label: '关闭右侧',
-        onClick: () => onTabAction('closeRight')
+        key: "closeRight",
+        label: "关闭右侧",
+        onClick: () => onTabAction("closeRight")
       },
       {
-        type: 'divider' as const
+        type: "divider" as const
       },
       {
-        key: 'closeAll',
-        label: '关闭所有',
-        onClick: () => onTabAction('closeAll')
+        key: "closeAll",
+        label: "关闭所有",
+        onClick: () => onTabAction("closeAll")
       }
     ]
   });
@@ -54,10 +54,10 @@ const TabBar: React.FC<TabBarProps> = ({
           <Dropdown
             key={tab.key}
             menu={getContextMenu(tab.key)}
-            trigger={['contextMenu']}
+            trigger={["contextMenu"]}
           >
             <div
-              className={`${styles.tabItem} ${activeTab === tab.key ? styles.tabItemActive : ''}`}
+              className={`${styles.tabItem} ${activeTab === tab.key ? styles.tabItemActive : ""}`}
               onClick={() => onTabClick(tab.key)}
             >
               <span className={styles.tabLabel}>{tab.label}</span>

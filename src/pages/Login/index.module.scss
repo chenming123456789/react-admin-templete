@@ -67,17 +67,17 @@
 
   // 背景图叠加
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: url('@/assets/login-bg.png') center / cover no-repeat;
+    background: url("@/assets/login-bg.png") center / cover no-repeat;
     opacity: 0.35;
     z-index: 0;
   }
 
   // 渐变遮罩
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(
@@ -179,7 +179,7 @@
 
   // 顶部彩色线条装饰
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;

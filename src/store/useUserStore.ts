@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface UserState {
   token: string | null;
@@ -9,7 +9,7 @@ interface UserState {
     avatar?: string;
   } | null;
   setToken: (token: string | null) => void;
-  setUserInfo: (userInfo: UserState['userInfo']) => void;
+  setUserInfo: (userInfo: UserState["userInfo"]) => void;
   logout: () => void;
 }
 
@@ -22,11 +22,11 @@ export const useUserStore = create<UserState>()(
       setUserInfo: (userInfo) => set({ userInfo }),
       logout: () => {
         set({ token: null, userInfo: null });
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
       }
     }),
     {
-      name: 'user-storage'
+      name: "user-storage"
     }
   )
 );

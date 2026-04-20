@@ -1,20 +1,20 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
-import MainLayout from '@/layout/MainLayout';
-import Login from '@/pages/Login';
-import Dashboard from '@/pages/Dashboard';
-import UserManagement from '@/pages/User';
-import RoleManagement from '@/pages/Role';
-import Profile from '@/pages/Profile';
-import Test from '@/pages/Test';
-import Registration from '@/pages/Medical/Registration';
-import Billing from '@/pages/Medical/Billing';
-import ChannelManagement from '@/pages/Medical/Channel';
-import NotFound from '@/pages/NotFound';
-import AuthGuard from '@/components/AuthGuard';
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import MainLayout from "@/layout/MainLayout";
+import Login from "@/pages/Login";
+import Dashboard from "@/pages/Dashboard";
+import UserManagement from "@/pages/User";
+import RoleManagement from "@/pages/Role";
+import Profile from "@/pages/Profile";
+import Test from "@/pages/Test";
+import Registration from "@/pages/Medical/Registration";
+import Billing from "@/pages/Medical/Billing";
+import ChannelManagement from "@/pages/Medical/Channel";
+import NotFound from "@/pages/NotFound";
+import AuthGuard from "@/components/AuthGuard";
 
 const router = createBrowserRouter([
   {
-    path: '/login',
+    path: "/login",
     element: (
       <AuthGuard>
         <Login />
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: '/',
+    path: "/",
     element: (
       <AuthGuard>
         <MainLayout />
@@ -30,45 +30,45 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: '',
-        element: <Navigate to='/dashboard' replace />
+        path: "",
+        element: <Navigate to="/dashboard" replace />
       },
       {
-        path: 'dashboard',
+        path: "dashboard",
         element: <Dashboard />
       },
       {
-        path: 'users',
+        path: "users",
         element: <UserManagement />
       },
       {
-        path: 'roles',
+        path: "roles",
         element: <RoleManagement />
       },
       {
-        path: 'profile',
+        path: "profile",
         element: <Profile />
       },
       {
-        path: 'test',
+        path: "test",
         element: <Test />
       },
       {
-        path: 'medical/registration',
+        path: "medical/registration",
         element: <Registration />
       },
       {
-        path: 'medical/billing',
+        path: "medical/billing",
         element: <Billing />
       },
       {
-        path: 'medical/channel',
+        path: "medical/channel",
         element: <ChannelManagement />
       }
     ]
   },
   {
-    path: '*',
+    path: "*",
     element: <NotFound />
   }
 ]);

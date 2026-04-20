@@ -2,8 +2,8 @@ import axios, {
   AxiosInstance,
   AxiosResponse,
   InternalAxiosRequestConfig
-} from 'axios';
-import { message } from 'antd';
+} from "axios";
+import { message } from "antd";
 
 interface ApiResponse<T = any> {
   code: number;
@@ -13,7 +13,7 @@ interface ApiResponse<T = any> {
 
 // 创建 axios 实例
 const service: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || "/api",
   timeout: 10000
 });
 
@@ -21,9 +21,9 @@ const service: AxiosInstance = axios.create({
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // 在这里添加 token 等逻辑
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
@@ -42,31 +42,31 @@ service.interceptors.response.use(
       return res; // 返回完整 { code, data, message }
     }
     // 业务错误
-    message.error(res.message || '业务请求失败');
-    return Promise.reject(new Error(res.message || 'Error'));
+    message.error(res.message || "业务请求失败");
+    return Promise.reject(new Error(res.message || "Error"));
   },
   (error) => {
-    console.error('请求异常：', error);
+    console.error("请求异常：", error);
 
     // HTTP 状态码错误处理
     if (error.response) {
       const { status } = error.response;
 
       if (status === 401) {
-        message.error('登录已过期，请重新登录');
+        message.error("登录已过期，请重新登录");
         localStorage.clear();
         setTimeout(() => {
-          window.location.href = '/login';
+          window.location.href = "/login";
         }, 1000);
       } else if (status === 403) {
-        message.error('没有权限访问');
+        message.error("没有权限访问");
       } else if (status === 500) {
-        message.error('服务器错误');
+        message.error("服务器错误");
       } else {
-        message.error(error.message || '请求异常');
+        message.error(error.message || "请求异常");
       }
     } else {
-      message.error('网络异常，请检查连接');
+      message.error("网络异常，请检查连接");
     }
     return Promise.reject(error);
   }

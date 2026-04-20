@@ -1,12 +1,12 @@
-import React from 'react';
-import TitleTest from '@/components/AuthGuard/TitleTest';
-import MyButton from '@/components/AuthGuard/MyButton';
-import ItemList from '@/components/AuthGuard/ItemList';
-import TodoList from '@/components/AuthGuard/TodoList';
-import Counter from '@/components/AuthGuard/Counter';
-import Switch from '@/components/AuthGuard/Switch';
-import EffectDemo from '@/components/AuthGuard/EffectDemo';
-import styles from './index.module.scss';
+import React from "react";
+import TitleTest from "@/components/AuthGuard/TitleTest";
+import MyButton from "@/components/AuthGuard/MyButton";
+import ItemList from "@/components/AuthGuard/ItemList";
+import TodoList from "@/components/AuthGuard/TodoList";
+import Counter from "@/components/AuthGuard/Counter";
+import Switch from "@/components/AuthGuard/Switch";
+import EffectDemo from "@/components/AuthGuard/EffectDemo";
+import styles from "./index.module.scss";
 
 const Test: React.FC = () => {
   return (

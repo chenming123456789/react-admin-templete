@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Button, message, Checkbox } from 'antd';
+import React, { useEffect } from "react";
+import { Form, Input, Button, message, Checkbox } from "antd";
 import {
   UserOutlined,
   LockOutlined,
@@ -7,10 +7,10 @@ import {
   GithubOutlined,
   DingdingOutlined,
   AlipayCircleOutlined
-} from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-import { useUserStore } from '@/store/useUserStore';
-import styles from './index.module.scss';
+} from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from "@/store/useUserStore";
+import styles from "./index.module.scss";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -19,32 +19,32 @@ const Login: React.FC = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    const username = localStorage.getItem('username');
-    const rememberChecked = localStorage.getItem('rememberChecked');
-    if (username && rememberChecked === 'true') {
+    const username = localStorage.getItem("username");
+    const rememberChecked = localStorage.getItem("rememberChecked");
+    if (username && rememberChecked === "true") {
       form.setFieldsValue({ username, remember: true });
     }
   }, [form]);
 
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-    message.success('登录成功');
+    console.log("Received values of form: ", values);
+    message.success("登录成功");
     if (values.remember) {
-      localStorage.setItem('username', values.username);
-      localStorage.setItem('rememberChecked', 'true');
+      localStorage.setItem("username", values.username);
+      localStorage.setItem("rememberChecked", "true");
     } else {
-      localStorage.removeItem('username');
-      localStorage.setItem('rememberChecked', 'false');
+      localStorage.removeItem("username");
+      localStorage.setItem("rememberChecked", "false");
     }
     // 设置全局状态
-    setToken('mock-token-' + Date.now());
+    setToken("mock-token-" + Date.now());
     setUserInfo({
       username: values.username,
-      role: 'admin',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'
+      role: "admin",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
     });
 
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
   return (
@@ -79,32 +79,32 @@ const Login: React.FC = () => {
           {/* 登录表单 */}
           <Form
             form={form}
-            name='login'
-            initialValues={{ remember: true, username: '', password: '' }}
+            name="login"
+            initialValues={{ remember: true, username: "", password: "" }}
             onFinish={onFinish}
             className={styles.loginForm}
-            size='large'
+            size="large"
           >
             <Form.Item
-              name='username'
-              rules={[{ required: true, message: '请输入用户名!' }]}
+              name="username"
+              rules={[{ required: true, message: "请输入用户名!" }]}
             >
-              <Input prefix={<UserOutlined />} placeholder='请输入用户名' />
+              <Input prefix={<UserOutlined />} placeholder="请输入用户名" />
             </Form.Item>
 
             <Form.Item
-              name='password'
-              rules={[{ required: true, message: '请输入密码!' }]}
+              name="password"
+              rules={[{ required: true, message: "请输入密码!" }]}
             >
               <Input.Password
                 prefix={<LockOutlined />}
-                placeholder='请输入密码'
+                placeholder="请输入密码"
               />
             </Form.Item>
 
             {/* 记住我 & 忘记密码 */}
             <div className={styles.formExtra}>
-              <Form.Item name='remember' valuePropName='checked' noStyle>
+              <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox className={styles.rememberCheckbox}>记住我</Checkbox>
               </Form.Item>
               <span className={styles.forgotLink}>忘记密码？</span>
@@ -112,8 +112,8 @@ const Login: React.FC = () => {
 
             <Form.Item>
               <Button
-                type='primary'
-                htmlType='submit'
+                type="primary"
+                htmlType="submit"
                 block
                 className={styles.loginButton}
               >

@@ -73,31 +73,15 @@ $text-white: #ffffff;
 
 .orgSelect {
   :global(.ant-select-selector) {
-    color: $text-white !important;
     background: transparent !important;
     border: none !important;
     padding: 0 8px !important;
   }
-
-  :global(.ant-select-arrow) {
-    color: rgba(255, 255, 255, 0.8) !important;
-  }
-
-  :global(.ant-select-selection-item) {
+  :global(.ant-select-content) {
     color: $text-white !important;
-    font-size: 13px;
   }
-
   :global(.ant-select-suffix) {
     color: $text-white !important;
-  }
-
-  // 下拉打开 / 聚焦时，选中项文字保持白色
-  &:global(.ant-select-open),
-  &:global(.ant-select-focused) {
-    :global(.ant-select-selection-item) {
-      color: $text-white !important;
-    }
   }
 }
 
@@ -186,7 +170,7 @@ $text-white: #ffffff;
 
         // 左侧选中指示条
         &::before {
-          content: '';
+          content: "";
           position: absolute;
           left: 0;
           top: 8px;

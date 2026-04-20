@@ -1,10 +1,10 @@
-import React from 'react';
-import styles from './index.module.scss';
+import React from "react";
+import styles from "./index.module.scss";
 
 export interface AlertItem {
   label: string;
   value: number | string;
-  color?: 'blue' | 'red' | 'orange';
+  color?: "blue" | "red" | "orange";
   onClick?: () => void;
 }
 
@@ -28,14 +28,14 @@ const AlertCard: React.FC<AlertCardProps> = ({ items }) => {
             <span className={styles.alertLabel}>{item.label}</span>
             <span
               className={`${styles.alertValue} ${
-                item.color === 'red'
+                item.color === "red"
                   ? styles.alertValueRed
-                  : item.color === 'orange'
+                  : item.color === "orange"
                     ? styles.alertValueOrange
                     : styles.alertValueBlue
               }`}
               onClick={item.onClick}
-              style={{ cursor: item.onClick ? 'pointer' : 'default' }}
+              style={{ cursor: item.onClick ? "pointer" : "default" }}
             >
               {item.value}
             </span>

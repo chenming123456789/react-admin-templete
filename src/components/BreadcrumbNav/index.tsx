@@ -1,8 +1,8 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { RightOutlined } from '@ant-design/icons';
-import { routeMetaMap } from '@/layout/MainLayout';
-import styles from './index.module.scss';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { RightOutlined } from "@ant-design/icons";
+import { routeMetaMap } from "@/layout/MainLayout";
+import styles from "./index.module.scss";
 
 /**
  * 面包屑导航组件
@@ -28,7 +28,7 @@ const BreadcrumbNav: React.FC = () => {
           {index > 0 && <RightOutlined className={styles.separator} />}
           <span
             className={`${styles.crumbItem} ${
-              index === crumbs.length - 1 ? styles.crumbItemActive : ''
+              index === crumbs.length - 1 ? styles.crumbItemActive : ""
             }`}
           >
             {crumb}
