@@ -84,6 +84,13 @@
 .dataTable {
   border-radius: 6px;
   overflow: hidden;
+
+  // 去掉表头间隔线
+  :global {
+    .ant-table-thead > tr > th::before {
+      display: none !important;
+    }
+  }
 }
 
 .nameLink {

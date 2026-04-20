@@ -10,7 +10,7 @@ import {
   TeamOutlined,
   SafetyOutlined,
   ExperimentOutlined,
-  ApartmentOutlined
+  ApartmentOutlined,
 } from "@ant-design/icons";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useUserStore } from "@/store/useUserStore";
@@ -32,6 +32,7 @@ export const routeMetaMap: Record<
   "/medical/registration": { title: "挂号管理", parentTitle: "医疗业务" },
   "/medical/billing": { title: "门诊收费", parentTitle: "医疗业务" },
   "/medical/channel": { title: "渠道管理", parentTitle: "医疗业务" },
+  "/medical/account": { title: "渠道账户管理", parentTitle: "医疗业务" },
   "/users": { title: "用户管理", parentTitle: "系统管理" },
   "/roles": { title: "角色管理", parentTitle: "系统管理" },
   "/profile": { title: "个人中心" },
@@ -162,6 +163,11 @@ const MainLayout: React.FC = () => {
           key: "/medical/channel",
           icon: <ApartmentOutlined />,
           label: "渠道管理"
+        },
+        {
+          key: "/medical/accountManagement",
+          icon: <ApartmentOutlined />,
+          label: "渠道账户管理"
         }
       ]
     },

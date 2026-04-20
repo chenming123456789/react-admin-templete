@@ -9,8 +9,10 @@ import Test from "@/pages/Test";
 import Registration from "@/pages/Medical/Registration";
 import Billing from "@/pages/Medical/Billing";
 import ChannelManagement from "@/pages/Medical/Channel";
+import AccountManagement from "@/pages/Medical/AccountManagement";
 import NotFound from "@/pages/NotFound";
 import AuthGuard from "@/components/AuthGuard";
+
 
 const router = createBrowserRouter([
   {
@@ -64,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: "medical/channel",
         element: <ChannelManagement />
+      },
+      {
+        path: "medical/accountManagement",
+        element: <AccountManagement />
       }
     ]
   },
