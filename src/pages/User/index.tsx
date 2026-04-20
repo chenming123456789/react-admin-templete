@@ -1,6 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Input, Space, Card, Modal, Form, message, Tag, Popconfirm } from 'antd';
-import { PlusOutlined, SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  Table,
+  Button,
+  Input,
+  Space,
+  Card,
+  Modal,
+  Form,
+  message,
+  Tag,
+  Popconfirm
+} from 'antd';
+import {
+  PlusOutlined,
+  SearchOutlined,
+  EditOutlined,
+  DeleteOutlined
+} from '@ant-design/icons';
 import styles from './index.module.scss';
 
 interface UserItem {
@@ -25,9 +41,30 @@ const UserManagement: React.FC = () => {
     setLoading(true);
     setTimeout(() => {
       const mockData: UserItem[] = [
-        { id: '1', username: 'admin', email: 'admin@example.com', role: '管理员', status: 'active', createTime: '2024-01-01' },
-        { id: '2', username: 'user1', email: 'user1@example.com', role: '普通用户', status: 'active', createTime: '2024-02-15' },
-        { id: '3', username: 'user2', email: 'user2@example.com', role: '普通用户', status: 'inactive', createTime: '2024-03-10' },
+        {
+          id: '1',
+          username: 'admin',
+          email: 'admin@example.com',
+          role: '管理员',
+          status: 'active',
+          createTime: '2024-01-01'
+        },
+        {
+          id: '2',
+          username: 'user1',
+          email: 'user1@example.com',
+          role: '普通用户',
+          status: 'active',
+          createTime: '2024-02-15'
+        },
+        {
+          id: '3',
+          username: 'user2',
+          email: 'user2@example.com',
+          role: '普通用户',
+          status: 'inactive',
+          createTime: '2024-03-10'
+        }
       ];
       setData(mockData);
       setLoading(false);
@@ -52,7 +89,7 @@ const UserManagement: React.FC = () => {
 
   const handleDelete = (id: string) => {
     message.success('删除成功');
-    setData(data.filter(item => item.id !== id));
+    setData(data.filter((item) => item.id !== id));
   };
 
   const handleModalOk = async () => {
@@ -60,7 +97,11 @@ const UserManagement: React.FC = () => {
       const values = await form.validateFields();
       if (editingItem) {
         // 编辑
-        setData(data.map(item => item.id === editingItem.id ? { ...item, ...values } : item));
+        setData(
+          data.map((item) =>
+            item.id === editingItem.id ? { ...item, ...values } : item
+          )
+        );
         message.success('更新成功');
       } else {
         // 新增
@@ -68,7 +109,7 @@ const UserManagement: React.FC = () => {
           ...values,
           id: Date.now().toString(),
           createTime: new Date().toISOString().split('T')[0],
-          status: 'active',
+          status: 'active'
         };
         setData([newItem, ...data]);
         message.success('创建成功');
@@ -83,9 +124,9 @@ const UserManagement: React.FC = () => {
     { title: '用户名', dataIndex: 'username', key: 'username' },
     { title: '邮箱', dataIndex: 'email', key: 'email' },
     { title: '角色', dataIndex: 'role', key: 'role' },
-    { 
-      title: '状态', 
-      dataIndex: 'status', 
+    {
+      title: '状态',
+      dataIndex: 'status',
       key: 'status',
       render: (status: string) => (
         <Tag color={status === 'active' ? 'green' : 'red'}>
@@ -98,14 +139,25 @@ const UserManagement: React.FC = () => {
       title: '操作',
       key: 'action',
       render: (_: any, record: UserItem) => (
-        <Space size="middle">
-          <Button type="link" icon={<EditOutlined />} onClick={() => handleEdit(record)}>编辑</Button>
-          <Popconfirm title="确定删除该用户吗？" onConfirm={() => handleDelete(record.id)}>
-            <Button type="link" danger icon={<DeleteOutlined />}>删除</Button>
+        <Space size='middle'>
+          <Button
+            type='link'
+            icon={<EditOutlined />}
+            onClick={() => handleEdit(record)}
+          >
+            编辑
+          </Button>
+          <Popconfirm
+            title='确定删除该用户吗？'
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <Button type='link' danger icon={<DeleteOutlined />}>
+              删除
+            </Button>
           </Popconfirm>
         </Space>
-      ),
-    },
+      )
+    }
   ];
 
   return (
@@ -113,22 +165,26 @@ const UserManagement: React.FC = () => {
       <Card bordered={false}>
         <div className={styles.toolbar}>
           <Space>
-            <Input 
-              placeholder="搜索用户名" 
-              prefix={<SearchOutlined />} 
+            <Input
+              placeholder='搜索用户名'
+              prefix={<SearchOutlined />}
               value={searchText}
-              onChange={e => setSearchText(e.target.value)}
+              onChange={(e) => setSearchText(e.target.value)}
               className={styles.searchInput}
             />
-            <Button type="primary" onClick={fetchList}>搜索</Button>
+            <Button type='primary' onClick={fetchList}>
+              搜索
+            </Button>
           </Space>
-          <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>新增用户</Button>
+          <Button type='primary' icon={<PlusOutlined />} onClick={handleAdd}>
+            新增用户
+          </Button>
         </div>
 
-        <Table 
-          columns={columns} 
-          dataSource={data.filter(item => item.username.includes(searchText))} 
-          rowKey="id" 
+        <Table
+          columns={columns}
+          dataSource={data.filter((item) => item.username.includes(searchText))}
+          rowKey='id'
           loading={loading}
           pagination={{ pageSize: 5 }}
         />
@@ -141,14 +197,28 @@ const UserManagement: React.FC = () => {
         onCancel={() => setIsModalOpen(false)}
         destroyOnClose
       >
-        <Form form={form} layout="vertical">
-          <Form.Item name="username" label="用户名" rules={[{ required: true, message: '请输入用户名' }]}>
+        <Form form={form} layout='vertical'>
+          <Form.Item
+            name='username'
+            label='用户名'
+            rules={[{ required: true, message: '请输入用户名' }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="email" label="邮箱" rules={[{ required: true, type: 'email', message: '请输入有效的邮箱' }]}>
+          <Form.Item
+            name='email'
+            label='邮箱'
+            rules={[
+              { required: true, type: 'email', message: '请输入有效的邮箱' }
+            ]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="role" label="角色" rules={[{ required: true, message: '请选择角色' }]}>
+          <Form.Item
+            name='role'
+            label='角色'
+            rules={[{ required: true, message: '请选择角色' }]}
+          >
             <Input />
           </Form.Item>
         </Form>

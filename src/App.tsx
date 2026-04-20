@@ -10,8 +10,8 @@ function App() {
       theme={{
         token: {
           colorPrimary: '#1677ff',
-          borderRadius: 6,
-        },
+          borderRadius: 6
+        }
       }}
     >
       <RouterProvider router={router} />

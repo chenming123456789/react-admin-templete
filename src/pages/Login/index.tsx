@@ -6,7 +6,7 @@ import {
   WechatOutlined,
   GithubOutlined,
   DingdingOutlined,
-  AlipayCircleOutlined,
+  AlipayCircleOutlined
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '@/store/useUserStore';
@@ -41,7 +41,7 @@ const Login: React.FC = () => {
     setUserInfo({
       username: values.username,
       role: 'admin',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'
     });
 
     navigate('/dashboard');
@@ -79,29 +79,32 @@ const Login: React.FC = () => {
           {/* 登录表单 */}
           <Form
             form={form}
-            name="login"
+            name='login'
             initialValues={{ remember: true, username: '', password: '' }}
             onFinish={onFinish}
             className={styles.loginForm}
-            size="large"
+            size='large'
           >
             <Form.Item
-              name="username"
+              name='username'
               rules={[{ required: true, message: '请输入用户名!' }]}
             >
-              <Input prefix={<UserOutlined />} placeholder="请输入用户名" />
+              <Input prefix={<UserOutlined />} placeholder='请输入用户名' />
             </Form.Item>
 
             <Form.Item
-              name="password"
+              name='password'
               rules={[{ required: true, message: '请输入密码!' }]}
             >
-              <Input.Password prefix={<LockOutlined />} placeholder="请输入密码" />
+              <Input.Password
+                prefix={<LockOutlined />}
+                placeholder='请输入密码'
+              />
             </Form.Item>
 
             {/* 记住我 & 忘记密码 */}
             <div className={styles.formExtra}>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
+              <Form.Item name='remember' valuePropName='checked' noStyle>
                 <Checkbox className={styles.rememberCheckbox}>记住我</Checkbox>
               </Form.Item>
               <span className={styles.forgotLink}>忘记密码？</span>
@@ -109,8 +112,8 @@ const Login: React.FC = () => {
 
             <Form.Item>
               <Button
-                type="primary"
-                htmlType="submit"
+                type='primary'
+                htmlType='submit'
                 block
                 className={styles.loginButton}
               >

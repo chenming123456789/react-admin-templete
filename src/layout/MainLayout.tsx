@@ -10,7 +10,7 @@ import {
   TeamOutlined,
   SafetyOutlined,
   ExperimentOutlined,
-  ApartmentOutlined,
+  ApartmentOutlined
 } from '@ant-design/icons';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useUserStore } from '@/store/useUserStore';
@@ -24,7 +24,10 @@ const { Header, Sider, Content } = Layout;
  * 路由与菜单的映射配置
  * 用于面包屑导航和 Tab 标签页自动获取页面标题
  */
-export const routeMetaMap: Record<string, { title: string; parentTitle?: string }> = {
+export const routeMetaMap: Record<
+  string,
+  { title: string; parentTitle?: string }
+> = {
   '/dashboard': { title: '工作台' },
   '/medical/registration': { title: '挂号管理', parentTitle: '医疗业务' },
   '/medical/billing': { title: '门诊收费', parentTitle: '医疗业务' },
@@ -32,7 +35,7 @@ export const routeMetaMap: Record<string, { title: string; parentTitle?: string 
   '/users': { title: '用户管理', parentTitle: '系统管理' },
   '/roles': { title: '角色管理', parentTitle: '系统管理' },
   '/profile': { title: '个人中心' },
-  '/test': { title: '测试页面' },
+  '/test': { title: '测试页面' }
 };
 
 /**
@@ -52,7 +55,7 @@ const MainLayout: React.FC = () => {
 
   // Tab 标签页状态
   const [tabs, setTabs] = useState<TabItem[]>([
-    { key: '/dashboard', label: '工作台', closable: false },
+    { key: '/dashboard', label: '工作台', closable: false }
   ]);
   const [activeTab, setActiveTab] = useState('/dashboard');
 
@@ -65,7 +68,10 @@ const MainLayout: React.FC = () => {
       setTabs((prevTabs) => {
         const exists = prevTabs.find((tab) => tab.key === path);
         if (!exists) {
-          return [...prevTabs, { key: path, label: meta.title, closable: path !== '/dashboard' }];
+          return [
+            ...prevTabs,
+            { key: path, label: meta.title, closable: path !== '/dashboard' }
+          ];
         }
         return prevTabs;
       });
@@ -78,7 +84,7 @@ const MainLayout: React.FC = () => {
       setActiveTab(key);
       navigate(key);
     },
-    [navigate],
+    [navigate]
   );
 
   // 关闭 Tab
@@ -95,7 +101,7 @@ const MainLayout: React.FC = () => {
         return newTabs;
       });
     },
-    [activeTab, navigate],
+    [activeTab, navigate]
   );
 
   // 关闭其他/全部 Tab
@@ -108,17 +114,21 @@ const MainLayout: React.FC = () => {
           return [prevTabs[0]]; // 保留工作台
         }
         if (action === 'closeOthers') {
-          const kept = prevTabs.filter((tab) => !tab.closable || tab.key === activeTab);
+          const kept = prevTabs.filter(
+            (tab) => !tab.closable || tab.key === activeTab
+          );
           return kept;
         }
         if (action === 'closeRight') {
-          const activeIndex = prevTabs.findIndex((tab) => tab.key === activeTab);
+          const activeIndex = prevTabs.findIndex(
+            (tab) => tab.key === activeTab
+          );
           return prevTabs.slice(0, activeIndex + 1);
         }
         return prevTabs;
       });
     },
-    [activeTab, navigate],
+    [activeTab, navigate]
   );
 
   const handleLogout = () => {
@@ -131,7 +141,7 @@ const MainLayout: React.FC = () => {
     {
       key: '/dashboard',
       icon: <DashboardOutlined />,
-      label: '工作台',
+      label: '工作台'
     },
     {
       key: 'medical',
@@ -141,19 +151,19 @@ const MainLayout: React.FC = () => {
         {
           key: '/medical/registration',
           icon: <UserOutlined />,
-          label: '挂号管理',
+          label: '挂号管理'
         },
         {
           key: '/medical/billing',
           icon: <ReconciliationOutlined />,
-          label: '门诊收费',
+          label: '门诊收费'
         },
         {
           key: '/medical/channel',
           icon: <ApartmentOutlined />,
-          label: '渠道管理',
-        },
-      ],
+          label: '渠道管理'
+        }
+      ]
     },
     {
       key: 'system',
@@ -163,25 +173,25 @@ const MainLayout: React.FC = () => {
         {
           key: '/users',
           icon: <TeamOutlined />,
-          label: '用户管理',
+          label: '用户管理'
         },
         {
           key: '/roles',
           icon: <SafetyOutlined />,
-          label: '角色管理',
-        },
-      ],
+          label: '角色管理'
+        }
+      ]
     },
     {
       key: '/profile',
       icon: <UserOutlined />,
-      label: '个人中心',
+      label: '个人中心'
     },
     {
       key: '/test',
       icon: <ExperimentOutlined />,
-      label: '测试页面',
-    },
+      label: '测试页面'
+    }
   ];
 
   // 用户下拉菜单
@@ -190,17 +200,17 @@ const MainLayout: React.FC = () => {
       key: 'profile',
       icon: <UserOutlined />,
       label: '个人信息',
-      onClick: () => navigate('/profile'),
+      onClick: () => navigate('/profile')
     },
     {
-      type: 'divider' as const,
+      type: 'divider' as const
     },
     {
       key: 'logout',
       icon: <LogoutOutlined />,
       label: '退出登录',
-      onClick: handleLogout,
-    },
+      onClick: handleLogout
+    }
   ];
 
   // 获取当前展开的菜单 key（自动展开当前路由所在的父菜单）
@@ -222,28 +232,30 @@ const MainLayout: React.FC = () => {
           </div>
           <div className={styles.orgSwitcher}>
             <Select
-              defaultValue="headquarters"
-              variant="borderless"
+              defaultValue='headquarters'
+              variant='borderless'
               popupMatchSelectWidth={false}
               className={styles.orgSelect}
               options={[
                 { value: 'headquarters', label: '总部' },
                 { value: 'branch1', label: '分部一' },
-                { value: 'branch2', label: '分部二' },
+                { value: 'branch2', label: '分部二' }
               ]}
             />
           </div>
         </div>
         <div className={styles.headerRight}>
-          <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+          <Dropdown menu={{ items: userMenuItems }} placement='bottomRight'>
             <span className={styles.userDropdown}>
               <Avatar
                 className={styles.avatar}
-                size="small"
+                size='small'
                 src={userInfo?.avatar}
                 icon={!userInfo?.avatar && <UserOutlined />}
               />
-              <span className={styles.username}>{userInfo?.username || '管理员'}</span>
+              <span className={styles.username}>
+                {userInfo?.username || '管理员'}
+              </span>
             </span>
           </Dropdown>
           <div className={styles.settingIcon}>
@@ -254,9 +266,9 @@ const MainLayout: React.FC = () => {
 
       <Layout className={styles.mainBody}>
         {/* ===== 左侧菜单 ===== */}
-        <Sider width={200} className={styles.sider} theme="light">
+        <Sider width={200} className={styles.sider} theme='light'>
           <Menu
-            mode="inline"
+            mode='inline'
             selectedKeys={[location.pathname]}
             defaultOpenKeys={getDefaultOpenKeys()}
             items={menuItems}

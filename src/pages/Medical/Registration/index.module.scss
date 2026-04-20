@@ -1,200 +1,199 @@
 // 挂号管理页面样式
 .registrationWrapper {
-	height: 100%;
-	background: #fff;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 // --- 顶部导航栏 ---
 .headerBar {
-	background: #fff;
-	padding: 0 20px;
-	border-bottom: 1px solid #f0f0f0;
-	height: 48px;
-	flex-shrink: 0;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	position: sticky;
-	top: 0;
-	z-index: 10;
+  background: #fff;
+  padding: 0 20px;
+  border-bottom: 1px solid #f0f0f0;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .headerRight {
-	display: flex;
-	align-items: center;
-	gap: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .scheduleLink {
-	color: #1890ff;
+  color: #1890ff;
 }
 
 .dateNav {
-	font-size: 12px;
-	cursor: pointer;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 // --- 主内容区 ---
 .mainContent {
-	display: flex;
-	flex: 1;
-	overflow: hidden;
+  display: flex;
+  flex: 1;
+  overflow: hidden;
 }
 
 // --- 左侧医生列表 ---
 .sidebar {
-	width: 200px;
-	background: #f7f9fb;
-	border-right: 1px solid #f0f0f0;
-	padding: 12px;
+  width: 200px;
+  background: #f7f9fb;
+  border-right: 1px solid #f0f0f0;
+  padding: 12px;
 }
 
 .doctorCard {
-	margin-bottom: 8px;
-	padding: 12px;
-	border-radius: 4px;
-	border: 1px solid #f0f0f0;
-	background: #fff;
-	cursor: pointer;
+  margin-bottom: 8px;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #f0f0f0;
+  background: #fff;
+  cursor: pointer;
 
-	&.active {
-		border-color: #1890ff;
-		background: #e6f7ff;
-	}
+  &.active {
+    border-color: #1890ff;
+    background: #e6f7ff;
+  }
 }
 
 .doctorHeader {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .doctorName {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .statusTag {
-	margin-left: 8px;
-	border-radius: 10px;
-	font-size: 12px;
-	padding: 0 6px;
+  margin-left: 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  padding: 0 6px;
 }
 
 .registerBtn {
-	&.active {
-		color: #1890ff;
-	}
+  &.active {
+    color: #1890ff;
+  }
 
-	&.inactive {
-		color: #666;
-	}
+  &.inactive {
+    color: #666;
+  }
 }
 
 .doctorCounters {
-	font-size: 12px;
-	color: #666;
+  font-size: 12px;
+  color: #666;
 }
 
 .toolsSection {
-	margin-top: 24px;
-	padding-top: 12px;
-	border-top: 1px solid #e8e8e8;
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #e8e8e8;
 }
 
 .toolsLink {
-	text-align: left;
-	padding: 0;
-	color: #666;
+  text-align: left;
+  padding: 0;
+  color: #666;
 }
 
 // --- 右侧患者表格 ---
 .tableContent {
-	flex: 1;
-	padding: 16px;
+  flex: 1;
+  padding: 16px;
 }
 
 .statusBar {
-	margin-bottom: 16px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .searchInput {
-	width: 220px;
-	border-radius: 20px;
+  width: 220px;
+  border-radius: 20px;
 }
 
 .searchIcon {
-	color: #ccc;
+  color: #ccc;
 }
 
 .collaborateBtn {
-	border-radius: 6px;
-	background: #1890ff;
+  border-radius: 6px;
+  background: #1890ff;
 }
 
 .patientLink {
-	color: #1890ff;
-	cursor: pointer;
+  color: #1890ff;
+  cursor: pointer;
 }
 
 .tagPill {
-	border-radius: 10px;
-	background: #f6ffed;
-	border-color: #b7eb8f;
-	color: #52c41a;
+  border-radius: 10px;
+  background: #f6ffed;
+  border-color: #b7eb8f;
+  color: #52c41a;
 }
 
 .ellipsisIcon {
-	color: #999;
+  color: #999;
 }
 
 .progressCell {
-	width: 120px;
+  width: 120px;
 }
 
 .statusText {
-	color: #fa8c16;
+  color: #fa8c16;
 }
 
 .visitTag {
-	border-radius: 4px;
+  border-radius: 4px;
 }
 
 .actionLink {
-	padding: 0;
+  padding: 0;
 }
 
 // --- 覆盖 Ant Design 样式 ---
 :global {
-	.registration-page {
-		.ant-tabs-nav::before {
-			border-bottom: none !important;
-		}
+  .registration-page {
+    .ant-tabs-nav::before {
+      border-bottom: none !important;
+    }
 
-		.ant-tabs-tab-active {
-			font-weight: bold;
-		}
+    .ant-tabs-tab-active {
+      font-weight: bold;
+    }
 
-		.custom-table-row:hover {
-			background-color: #f0f7ff !important;
-		}
+    .custom-table-row:hover {
+      background-color: #f0f7ff !important;
+    }
 
-		.ant-table-thead > tr > th {
-			background: #f7f9fb !important;
-			color: #666 !important;
-			font-weight: normal !important;
-		}
+    .ant-table-thead > tr > th {
+      background: #f7f9fb !important;
+      color: #666 !important;
+      font-weight: normal !important;
+    }
 
-		.ant-table {
-			margin-bottom: 0 !important;
-		}
-	}
+    .ant-table {
+      margin-bottom: 0 !important;
+    }
+  }
 }
-

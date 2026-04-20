@@ -19,7 +19,7 @@ const router = createBrowserRouter([
       <AuthGuard>
         <Login />
       </AuthGuard>
-    ),
+    )
   },
   {
     path: '/',
@@ -31,46 +31,46 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Navigate to="/dashboard" replace />,
+        element: <Navigate to='/dashboard' replace />
       },
       {
         path: 'dashboard',
-        element: <Dashboard />,
+        element: <Dashboard />
       },
       {
         path: 'users',
-        element: <UserManagement />,
+        element: <UserManagement />
       },
       {
         path: 'roles',
-        element: <RoleManagement />,
+        element: <RoleManagement />
       },
       {
         path: 'profile',
-        element: <Profile />,
+        element: <Profile />
       },
       {
         path: 'test',
-        element: <Test />,
+        element: <Test />
       },
       {
         path: 'medical/registration',
-        element: <Registration />,
+        element: <Registration />
       },
       {
         path: 'medical/billing',
-        element: <Billing />,
+        element: <Billing />
       },
       {
         path: 'medical/channel',
-        element: <ChannelManagement />,
-      },
-    ],
+        element: <ChannelManagement />
+      }
+    ]
   },
   {
     path: '*',
-    element: <NotFound />,
-  },
+    element: <NotFound />
+  }
 ]);
 
 export default router;

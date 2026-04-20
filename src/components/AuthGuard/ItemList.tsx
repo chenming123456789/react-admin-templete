@@ -5,7 +5,7 @@ const ItemList = () => {
       <li>列表项 2</li>
       <li>列表项 3</li>
     </ul>
-  )
-}
+  );
+};
 
-export default ItemList
+export default ItemList;

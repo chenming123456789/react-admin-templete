@@ -16,29 +16,35 @@ interface TabBarProps {
  * 多标签页导航组件
  * 参考企业级管理系统的标签页导航设计
  */
-const TabBar: React.FC<TabBarProps> = ({ tabs, activeTab, onTabClick, onTabClose, onTabAction }) => {
+const TabBar: React.FC<TabBarProps> = ({
+  tabs,
+  activeTab,
+  onTabClick,
+  onTabClose,
+  onTabAction
+}) => {
   // 右键菜单
   const getContextMenu = (tabKey: string) => ({
     items: [
       {
         key: 'closeOthers',
         label: '关闭其他',
-        onClick: () => onTabAction('closeOthers'),
+        onClick: () => onTabAction('closeOthers')
       },
       {
         key: 'closeRight',
         label: '关闭右侧',
-        onClick: () => onTabAction('closeRight'),
+        onClick: () => onTabAction('closeRight')
       },
       {
-        type: 'divider' as const,
+        type: 'divider' as const
       },
       {
         key: 'closeAll',
         label: '关闭所有',
-        onClick: () => onTabAction('closeAll'),
-      },
-    ],
+        onClick: () => onTabAction('closeAll')
+      }
+    ]
   });
 
   return (
