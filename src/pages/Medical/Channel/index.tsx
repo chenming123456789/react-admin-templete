@@ -10,13 +10,7 @@ import {
   message,
   Tag
 } from "antd";
-import {
-  PlusOutlined,
-  SearchOutlined,
-  ReloadOutlined,
-  ExportOutlined,
-  WarningOutlined
-} from "@ant-design/icons";
+import { WarningOutlined } from "@ant-design/icons";
 import AlertCard from "@/components/AlertCard";
 import type { AlertItem } from "@/components/AlertCard";
 import type { ColumnsType } from "antd/es/table";
@@ -156,6 +150,12 @@ const ChannelManagement: React.FC = () => {
 
   // 提醒数据
   const alertItems: AlertItem[] = [
+    { label: "近3个月合作到期：", value: "0家", color: "blue" },
+    { label: "近1个月合作到期：", value: "0家", color: "blue" },
+    { label: "合作已到期：", value: "0家", color: "blue" },
+    { label: "营业执照近3个月到期：", value: "0家", color: "blue" },
+    { label: "营业执照近1个月到期：", value: "0家", color: "blue" },
+    { label: "营业执照已到期：", value: "0家", color: "blue" },
     { label: "身份证近3个月到期：", value: "0家", color: "blue" },
     { label: "身份证近1个月到期：", value: "0家", color: "blue" },
     { label: "身份证已到期：", value: "0家", color: "blue" }
@@ -169,13 +169,14 @@ const ChannelManagement: React.FC = () => {
       key: "name",
       width: 140,
       ellipsis: true,
+      fixed: "left",
       render: (text: string) => <span className={styles.nameLink}>{text}</span>
     },
     {
       title: "客户数（人）",
       dataIndex: "customerCount",
       key: "customerCount",
-      width: 100,
+      width: 120,
       align: "center"
     },
     {
@@ -195,7 +196,7 @@ const ChannelManagement: React.FC = () => {
       title: "营业执照剩余到期时间",
       dataIndex: "licenseExpiry",
       key: "licenseExpiry",
-      width: 160,
+      width: 180,
       render: (text: string) => {
         if (text === "已到期") return <Tag color="red">{text}</Tag>;
         if (text === "长期") return <Tag color="green">{text}</Tag>;
@@ -229,16 +230,16 @@ const ChannelManagement: React.FC = () => {
       width: 220,
       fixed: "right",
       render: (_: unknown, record: ChannelRecord) => (
-        <Space size={0} split={<span className={styles.actionDivider} />}>
-          <Button type="link" size="small" className={styles.actionBtn}>
+        <Space size={0} separator={<span className={styles.actionDivider} />}>
+          <Button type="link" size="small">
             查看渠道
           </Button>
           {record.status === "terminated" ? (
-            <Button type="link" size="small" className={styles.actionBtnGreen}>
+            <Button type="link" size="small">
               重启合作
             </Button>
           ) : (
-            <Button type="link" size="small" className={styles.actionBtnOrange}>
+            <Button type="link" size="small">
               终止合作
             </Button>
           )}
@@ -246,14 +247,8 @@ const ChannelManagement: React.FC = () => {
             title="确定删除该渠道吗？"
             onConfirm={() => message.success("删除成功")}
             okText="确定"
-            cancelText="取消"
-          >
-            <Button
-              type="link"
-              size="small"
-              danger
-              className={styles.actionBtnDanger}
-            >
+            cancelText="取消">
+            <Button type="link" size="small" danger>
               删除
             </Button>
           </Popconfirm>
@@ -359,27 +354,19 @@ const ChannelManagement: React.FC = () => {
             placeholder={["合作开始日期", "合作结束日期"]}
             className={styles.searchDateRange}
           />
-          <Button
-            type="primary"
-            icon={<SearchOutlined />}
-            onClick={handleSearch}
-          >
+          <Button type="primary" onClick={handleSearch}>
             查询
           </Button>
-          <Button icon={<ReloadOutlined />} onClick={handleReset}>
-            重置
-          </Button>
+          <Button onClick={handleReset}>重置</Button>
         </div>
       </div>
 
       {/* 操作按钮区域 */}
       <div className={styles.actionArea}>
         <Space>
-          <Button type="primary" icon={<PlusOutlined />}>
-            新增渠道
-          </Button>
-          <Button icon={<ExportOutlined />}>导出选中</Button>
-          <Button icon={<ExportOutlined />}>导出全部</Button>
+          <Button type="primary">新增渠道</Button>
+          <Button>导出选中</Button>
+          <Button>导出全部</Button>
         </Space>
         <div className={styles.alertNotice}>
           <WarningOutlined className={styles.alertNoticeIcon} />

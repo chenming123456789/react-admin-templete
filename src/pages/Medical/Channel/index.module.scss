@@ -46,7 +46,6 @@
 .actionArea {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 12px;
   flex-wrap: wrap;
   gap: 10px;
@@ -104,27 +103,4 @@
   background: #e8e8e8;
   margin: 0 2px;
   vertical-align: middle;
-}
-
-.actionBtn {
-  padding: 0 4px !important;
-  font-size: 12px !important;
-  color: #1890ff !important;
-}
-
-.actionBtnOrange {
-  padding: 0 4px !important;
-  font-size: 12px !important;
-  color: #fa8c16 !important;
-}
-
-.actionBtnGreen {
-  padding: 0 4px !important;
-  font-size: 12px !important;
-  color: #52c41a !important;
-}
-
-.actionBtnDanger {
-  padding: 0 4px !important;
-  font-size: 12px !important;
 }

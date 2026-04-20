@@ -227,8 +227,11 @@ const MainLayout: React.FC = () => {
       <Header className={styles.header}>
         <div className={styles.headerLeft}>
           <div className={styles.logo}>
-            <div className={styles.logoIcon}>RA</div>
-            <span className={styles.logoText}>React Admin</span>
+            <img
+              src="https://test-sccqweb.dashiyiyang.com/web/assets/white_logo2-DKrXj4mR.png"
+              alt=""
+              className={styles.logoIcon}
+            />
           </div>
           <div className={styles.orgSwitcher}>
             <Select

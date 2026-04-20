@@ -43,25 +43,11 @@ $text-white: #ffffff;
 }
 
 .logoIcon {
-  width: 30px;
-  height: 30px;
-  background: rgba(255, 255, 255, 0.25);
-  border-radius: 6px;
+  width: 150px;
+  height: 27.5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $text-white;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.logoText {
-  color: $text-white;
-  font-size: 16px;
-  font-weight: 600;
-  white-space: nowrap;
-  letter-spacing: 0.5px;
 }
 
 // 组织切换器

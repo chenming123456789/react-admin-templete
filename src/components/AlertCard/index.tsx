@@ -35,13 +35,9 @@ const AlertCard: React.FC<AlertCardProps> = ({ items }) => {
                     : styles.alertValueBlue
               }`}
               onClick={item.onClick}
-              style={{ cursor: item.onClick ? "pointer" : "default" }}
-            >
+              style={{ cursor: item.onClick ? "pointer" : "default" }}>
               {item.value}
             </span>
-            {index < items.length - 1 && (
-              <span className={styles.alertDivider} />
-            )}
           </span>
         ))}
       </div>
