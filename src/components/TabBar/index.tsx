@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown } from "antd";
+import { Dropdown, theme } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import type { TabItem } from "@/layout/MainLayout";
 import styles from "./index.module.scss";
@@ -23,6 +23,7 @@ const TabBar: React.FC<TabBarProps> = ({
   onTabClose,
   onTabAction
 }) => {
+  const { token } = theme.useToken();
   // 右键菜单
   const getContextMenu = (tabKey: string) => ({
     items: [
@@ -48,7 +49,13 @@ const TabBar: React.FC<TabBarProps> = ({
   });
 
   return (
-    <div className={styles.tabBar}>
+    <div
+      className={styles.tabBar}
+      style={{
+        background: token.colorBgContainer,
+        borderBottom: `1px solid ${token.colorBorderSecondary}`
+      }}
+    >
       <div className={styles.tabList}>
         {tabs.map((tab) => (
           <Dropdown
@@ -58,6 +65,11 @@ const TabBar: React.FC<TabBarProps> = ({
           >
             <div
               className={`${styles.tabItem} ${activeTab === tab.key ? styles.tabItemActive : ""}`}
+              style={{
+                background: activeTab === tab.key ? token.colorBgContainer : token.colorFillTertiary,
+                color: activeTab === tab.key ? token.colorPrimary : token.colorTextSecondary,
+                borderColor: activeTab === tab.key ? token.colorBorderSecondary : "transparent"
+              }}
               onClick={() => onTabClick(tab.key)}
             >
               <span className={styles.tabLabel}>{tab.label}</span>

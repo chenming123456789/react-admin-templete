@@ -1,4 +1,5 @@
 import React from "react";
+import { theme } from "antd";
 import styles from "./index.module.scss";
 
 export interface AlertItem {
@@ -18,10 +19,14 @@ interface AlertCardProps {
  * 参考截图中的黄色提醒区域
  */
 const AlertCard: React.FC<AlertCardProps> = ({ items }) => {
+  const { token } = theme.useToken();
   if (!items || items.length === 0) return null;
 
   return (
-    <div className={styles.alertCard}>
+    <div
+      className={styles.alertCard}
+      style={{ background: token.colorInfoBg, border: `1px solid ${token.colorInfoBorder}` }}
+    >
       <div className={styles.alertContent}>
         {items.map((item, index) => (
           <span key={index} className={styles.alertItem}>

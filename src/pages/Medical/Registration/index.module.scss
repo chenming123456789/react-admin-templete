@@ -1,7 +1,7 @@
 // 挂号管理页面样式
 .registrationWrapper {
   height: 100%;
-  background: #fff;
+  background: transparent;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -9,9 +9,9 @@
 
 // --- 顶部导航栏 ---
 .headerBar {
-  background: #fff;
+  background: transparent;
   padding: 0 20px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid transparent;
   height: 48px;
   flex-shrink: 0;
   display: flex;
@@ -47,8 +47,8 @@
 // --- 左侧医生列表 ---
 .sidebar {
   width: 200px;
-  background: #f7f9fb;
-  border-right: 1px solid #f0f0f0;
+  background: transparent;
+  border-right: 1px solid transparent;
   padding: 12px;
 }
 
@@ -56,8 +56,8 @@
   margin-bottom: 8px;
   padding: 12px;
   border-radius: 4px;
-  border: 1px solid #f0f0f0;
-  background: #fff;
+  border: 1px solid transparent;
+  background: transparent;
   cursor: pointer;
 
   &.active {
@@ -182,13 +182,11 @@
       font-weight: bold;
     }
 
-    .custom-table-row:hover {
-      background-color: #f0f7ff !important;
-    }
+    // 移除硬编码的 hover 颜色，让 antd 自动处理
 
     .ant-table-thead > tr > th {
-      background: #f7f9fb !important;
-      color: #666 !important;
+      background: transparent !important;
+      color: inherit !important;
       font-weight: normal !important;
     }
 

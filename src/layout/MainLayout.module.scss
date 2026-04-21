@@ -20,7 +20,7 @@ $text-white: #ffffff;
 .header {
   height: $header-height;
   line-height: $header-height;
-  background: linear-gradient(340deg, #307bdf, #307bdfd4);
+  background: transparent;
   padding: 0 16px;
   display: flex;
   align-items: center;
@@ -191,7 +191,7 @@ $text-white: #ffffff;
 
 // ========== 内容区域布局 ==========
 .contentLayout {
-  background: $bg-color;
+  background: transparent;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -201,10 +201,9 @@ $text-white: #ffffff;
   flex: 1;
   margin: 0 16px 16px;
   padding: 16px;
-  background: #ffffff;
+  background: transparent;
   border-radius: 8px;
   overflow: auto;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 
   // 内容区域自定义滚动条
   &::-webkit-scrollbar {
@@ -217,5 +216,19 @@ $text-white: #ffffff;
   }
   &::-webkit-scrollbar-track {
     background: transparent;
+  }
+}
+
+// ========== 设置抽屉样式 ==========
+.settingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #333;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }

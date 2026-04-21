@@ -1,19 +1,10 @@
 import { RouterProvider } from "react-router-dom";
-import { ConfigProvider } from "antd";
-import zhCN from "antd/locale/zh_CN";
+import { ConfigProvider } from "@/context/ConfigContext";
 import router from "./router";
 
 function App() {
   return (
-    <ConfigProvider
-      locale={zhCN}
-      theme={{
-        token: {
-          colorPrimary: "#1677ff",
-          borderRadius: 6
-        }
-      }}
-    >
+    <ConfigProvider>
       <RouterProvider router={router} />
     </ConfigProvider>
   );

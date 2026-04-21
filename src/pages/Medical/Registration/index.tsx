@@ -9,7 +9,8 @@ import {
   Badge,
   Progress,
   Pagination,
-  Typography
+  Typography,
+  theme
 } from "antd";
 import {
   LeftOutlined,
@@ -54,6 +55,7 @@ interface DoctorInfo {
 }
 
 const Registration: React.FC = () => {
+  const { token } = theme.useToken();
   const [activeTab, setActiveTab] = useState("1");
   const [activeStatus, setActiveStatus] = useState("1");
   const [selectedDoctorId, setSelectedDoctorId] = useState("all");
@@ -324,6 +326,10 @@ const Registration: React.FC = () => {
             <div
               key={doc.id}
               className={`${styles.doctorCard} ${doc.id === selectedDoctorId ? styles.active : ""}`}
+              style={{
+                background: doc.id === selectedDoctorId ? token.colorPrimaryBg : "transparent",
+                borderColor: doc.id === selectedDoctorId ? token.colorPrimary : "transparent"
+              }}
               onClick={() => setSelectedDoctorId(doc.id)}
             >
               <div className={styles.doctorHeader}>

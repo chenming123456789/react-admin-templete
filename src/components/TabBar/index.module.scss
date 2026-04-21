@@ -6,8 +6,6 @@ $bg-color: #f0f2f5;
 
 .tabBar {
   height: $tab-height;
-  background: #ffffff;
-  border-bottom: 1px solid #e8e8e8;
   display: flex;
   align-items: flex-end;
   padding: 0 12px;
@@ -59,21 +57,7 @@ $bg-color: #f0f2f5;
 }
 
 .tabItemActive {
-  color: $primary-color;
-  background: #ffffff;
   font-weight: 500;
-  border-color: #e8e8e8;
-
-  // 底部盖住容器 border 的白线
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: #ffffff;
-  }
 }
 
 .tabLabel {

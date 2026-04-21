@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { RightOutlined } from "@ant-design/icons";
+import { theme } from "antd";
 import { routeMetaMap } from "@/layout/MainLayout";
 import styles from "./index.module.scss";
 
@@ -9,6 +10,7 @@ import styles from "./index.module.scss";
  * 根据当前路由自动生成面包屑路径
  */
 const BreadcrumbNav: React.FC = () => {
+  const { token } = theme.useToken();
   const location = useLocation();
   const currentPath = location.pathname;
   const meta = routeMetaMap[currentPath];
@@ -30,6 +32,7 @@ const BreadcrumbNav: React.FC = () => {
             className={`${styles.crumbItem} ${
               index === crumbs.length - 1 ? styles.crumbItemActive : ""
             }`}
+            style={{ color: index === crumbs.length - 1 ? token.colorText : token.colorTextSecondary }}
           >
             {crumb}
           </span>

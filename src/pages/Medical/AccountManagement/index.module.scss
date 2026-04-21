@@ -1,0 +1,68 @@
+.accountPage {
+}
+
+.searchArea {
+  margin-bottom: 12px;
+  .searchRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    :global(.ant-form-item) {
+      margin-bottom: 0;
+      flex: none;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .searchInput {
+    width: 230px;
+  }
+}
+
+.actionArea {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.alertNotice {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff7e6;
+  border: 1px solid #ffd591;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: #595959;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: #fa8c16;
+    background: #fff2e0;
+  }
+}
+
+.alertNoticeIcon {
+  color: #fa8c16;
+  font-size: 14px;
+}
+
+.alertNoticeCount {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+// 操作列分隔符
+.actionDivider {
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background: #e8e8e8;
+  margin: 0 2px;
+  vertical-align: middle;
+}

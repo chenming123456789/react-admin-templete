@@ -7,9 +7,6 @@
 
 // ========== 搜索筛选区域 ==========
 .searchArea {
-  background: #ffffff;
-  border: 1px solid #f0f0f0;
-  border-radius: 6px;
   padding: 16px;
   margin-bottom: 12px;
 }
@@ -21,25 +18,17 @@
   flex-wrap: wrap;
   margin-bottom: 10px;
 
+  :global(.ant-form-item) {
+    margin-bottom: 0;
+    flex: none;
+  }
   &:last-child {
     margin-bottom: 0;
   }
 }
 
 .searchInput {
-  width: 240px;
-}
-
-.searchSelect {
-  width: 160px;
-}
-
-.searchSelectWide {
-  width: 200px;
-}
-
-.searchDateRange {
-  width: 260px;
+  width: 230px;
 }
 
 // ========== 操作按钮区域 ==========

@@ -8,7 +8,9 @@ import {
   DatePicker,
   Popconfirm,
   message,
-  Tag
+  Tag,
+  Form,
+  theme
 } from "antd";
 import { WarningOutlined } from "@ant-design/icons";
 import AlertCard from "@/components/AlertCard";
@@ -145,9 +147,10 @@ const mockData: ChannelRecord[] = [
 ];
 
 const ChannelManagement: React.FC = () => {
+  const { token } = theme.useToken();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [loading] = useState(false);
-
+  const [form] = Form.useForm();
   // 提醒数据
   const alertItems: AlertItem[] = [
     { label: "近3个月合作到期：", value: "0家", color: "blue" },
@@ -170,7 +173,11 @@ const ChannelManagement: React.FC = () => {
       width: 140,
       ellipsis: true,
       fixed: "left",
-      render: (text: string) => <span className={styles.nameLink}>{text}</span>
+      render: (text: string) => (
+        <span className={styles.nameLink} style={{ color: token.colorText }}>
+          {text}
+        </span>
+      )
     },
     {
       title: "客户数（人）",
@@ -258,11 +265,12 @@ const ChannelManagement: React.FC = () => {
   ];
 
   const handleSearch = () => {
-    message.info("搜索功能待对接后端接口");
+    const value = form.getFieldsValue();
+    console.log(value);
   };
 
   const handleReset = () => {
-    message.info("重置搜索条件");
+    form.resetFields();
   };
 
   return (
@@ -272,93 +280,88 @@ const ChannelManagement: React.FC = () => {
 
       {/* 搜索筛选区域 */}
       <div className={styles.searchArea}>
-        <div className={styles.searchRow}>
-          <Input
-            placeholder="渠道名称/法人/联系人/对接/手机"
-            className={styles.searchInput}
-            allowClear
-          />
-          <Select
-            placeholder="渠道类型"
-            className={styles.searchSelect}
-            allowClear
-            options={[
-              { value: "personal", label: "个人" },
-              { value: "enterprise", label: "企业" },
-              { value: "individual", label: "个体工商户" }
-            ]}
-          />
-          <Select
-            placeholder="合作状态"
-            className={styles.searchSelect}
-            allowClear
-            options={[
-              { value: "active", label: "合作中" },
-              { value: "expired", label: "已到期" },
-              { value: "terminated", label: "已终止" }
-            ]}
-          />
-          <Select
-            placeholder="身份证到期/剩余到期时间"
-            className={styles.searchSelectWide}
-            allowClear
-            options={[
-              { value: "1month", label: "近1个月到期" },
-              { value: "3month", label: "近3个月到期" },
-              { value: "expired", label: "已到期" }
-            ]}
-          />
-          <Select
-            placeholder="营业执照到期/剩余到期时间"
-            className={styles.searchSelectWide}
-            allowClear
-            options={[
-              { value: "1month", label: "近1个月到期" },
-              { value: "3month", label: "近3个月到期" },
-              { value: "expired", label: "已到期" }
-            ]}
-          />
-        </div>
-        <div className={styles.searchRow}>
-          <Select
-            placeholder="合作到期/剩余时间"
-            className={styles.searchSelect}
-            allowClear
-            options={[
-              { value: "1month", label: "近1个月到期" },
-              { value: "3month", label: "近3个月到期" },
-              { value: "expired", label: "已到期" }
-            ]}
-          />
-          <Select
-            placeholder="创建时间"
-            className={styles.searchSelect}
-            allowClear
-            options={[
-              { value: "today", label: "今天" },
-              { value: "week", label: "本周" },
-              { value: "month", label: "本月" }
-            ]}
-          />
-          <Select
-            placeholder="到期时间"
-            className={styles.searchSelect}
-            allowClear
-            options={[
-              { value: "1month", label: "1个月内" },
-              { value: "3month", label: "3个月内" },
-              { value: "6month", label: "6个月内" }
-            ]}
-          />
-          <RangePicker
-            placeholder={["合作开始日期", "合作结束日期"]}
-            className={styles.searchDateRange}
-          />
-          <Button type="primary" onClick={handleSearch}>
-            查询
-          </Button>
-          <Button onClick={handleReset}>重置</Button>
-        </div>
+        <Form form={form}>
+          <div className={styles.searchRow}>
+            <Form.Item name="username" className={styles.searchInput}>
+              <Input placeholder="渠道名称/法人/联系人/对接/手机" />
+            </Form.Item>
+            <Form.Item name="type" className={styles.searchInput}>
+              <Select
+                placeholder="渠道类型"
+                allowClear
+                options={[
+                  { value: "personal", label: "个人" },
+                  { value: "enterprise", label: "企业" },
+                  { value: "individual", label: "个体工商户" }
+                ]}
+              />
+            </Form.Item>
+            <Form.Item name="status" className={styles.searchInput}>
+              <Select
+                placeholder="合作状态"
+                allowClear
+                options={[
+                  { value: "active", label: "合作中" },
+                  { value: "expired", label: "已到期" },
+                  { value: "terminated", label: "已终止" }
+                ]}
+              />
+            </Form.Item>
+            <Form.Item name="idExpiry" className={styles.searchInput}>
+              <Select
+                placeholder="身份证到期/剩余到期时间"
+                allowClear
+                options={[
+                  { value: "1month", label: "近1个月到期" },
+                  { value: "3month", label: "近3个月到期" },
+                  { value: "expired", label: "已到期" }
+                ]}
+              />
+            </Form.Item>
+          </div>
+          <div className={styles.searchRow}>
+            <Form.Item name="licenseExpiry" className={styles.searchInput}>
+              <Select
+                placeholder="营业执照到期/剩余到期时间"
+                allowClear
+                options={[
+                  { value: "1month", label: "近1个月到期" },
+                  { value: "3month", label: "近3个月到期" },
+                  { value: "expired", label: "已到期" }
+                ]}
+              />
+            </Form.Item>
+            <Form.Item name="cooperationExpiry" className={styles.searchInput}>
+              <Select
+                placeholder="合作到期/剩余时间"
+                allowClear
+                options={[
+                  { value: "1month", label: "近1个月到期" },
+                  { value: "3month", label: "近3个月到期" },
+                  { value: "expired", label: "已到期" }
+                ]}
+              />
+            </Form.Item>
+            <Form.Item name="createTime" className={styles.searchInput}>
+              <Select
+                placeholder="创建时间"
+                allowClear
+                options={[
+                  { value: "today", label: "今天" },
+                  { value: "week", label: "本周" },
+                  { value: "month", label: "本月" }
+                ]}
+              />
+            </Form.Item>
+            <Form.Item name="cooperationRange" className={styles.searchInput}>
+              <RangePicker placeholder={["合作开始日期", "合作结束日期"]} />
+            </Form.Item>
+            <Button type="primary" onClick={handleSearch}>
+              查询
+            </Button>
+            <Button onClick={handleReset}>重置</Button>
+          </div>
+        </Form>
       </div>
 
       {/* 操作按钮区域 */}
@@ -368,7 +371,13 @@ const ChannelManagement: React.FC = () => {
           <Button>导出选中</Button>
           <Button>导出全部</Button>
         </Space>
-        <div className={styles.alertNotice}>
+        <div
+          className={styles.alertNotice}
+          style={{
+            background: token.colorWarningBg,
+            borderColor: token.colorWarningBorder,
+            color: token.colorWarningText
+          }}>
           <WarningOutlined className={styles.alertNoticeIcon} />
           <span>
             你有 <span className={styles.alertNoticeCount}>2条</span>{" "}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Layout, Menu, Dropdown, Avatar, Select } from "antd";
+import { Layout, Menu, Dropdown, Avatar, Select, Drawer, Switch, Divider, ColorPicker, theme } from "antd";
 import {
   UserOutlined,
   SettingOutlined,
@@ -11,9 +11,12 @@ import {
   SafetyOutlined,
   ExperimentOutlined,
   ApartmentOutlined,
+  BulbOutlined,
+  BulbFilled
 } from "@ant-design/icons";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useUserStore } from "@/store/useUserStore";
+import { useGlobalConfig } from "@/context/ConfigContext";
 import TabBar from "@/components/TabBar";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import styles from "./MainLayout.module.scss";
@@ -53,6 +56,15 @@ const MainLayout: React.FC = () => {
   const location = useLocation();
   const userInfo = useUserStore((state) => state.userInfo);
   const logout = useUserStore((state) => state.logout);
+  const {
+    isCompact,
+    algorithm,
+    setCompact,
+    setAlgorithm
+  } = useGlobalConfig();
+  const { token } = theme.useToken();
+
+  const [settingsVisible, setSettingsVisible] = useState(false);
 
   // Tab 标签页状态
   const [tabs, setTabs] = useState<TabItem[]>([
@@ -228,9 +240,20 @@ const MainLayout: React.FC = () => {
   };
 
   return (
-    <Layout className={styles.layoutRoot}>
+    <Layout
+      className={styles.layoutRoot}
+      style={{ background: token.colorBgLayout }}
+    >
       {/* ===== 顶部导航栏 ===== */}
-      <Header className={styles.header}>
+      <Header
+        className={styles.header}
+        style={{
+          background:
+            algorithm === "dark"
+              ? token.colorBgContainer
+              : "linear-gradient(340deg, #307bdf, #307bdfd4)"
+        }}
+      >
         <div className={styles.headerLeft}>
           <div className={styles.logo}>
             <img
@@ -266,7 +289,10 @@ const MainLayout: React.FC = () => {
               </span>
             </span>
           </Dropdown>
-          <div className={styles.settingIcon}>
+          <div
+            className={styles.settingIcon}
+            onClick={() => setSettingsVisible(true)}
+          >
             <SettingOutlined />
           </div>
         </div>
@@ -274,7 +300,11 @@ const MainLayout: React.FC = () => {
 
       <Layout className={styles.mainBody}>
         {/* ===== 左侧菜单 ===== */}
-        <Sider width={200} className={styles.sider} theme="light">
+        <Sider
+          width={200}
+          className={styles.sider}
+          style={{ background: token.colorBgContainer }}
+        >
           <Menu
             mode="inline"
             selectedKeys={[location.pathname]}
@@ -286,7 +316,10 @@ const MainLayout: React.FC = () => {
         </Sider>
 
         {/* ===== 右侧内容区域 ===== */}
-        <Layout className={styles.contentLayout}>
+        <Layout
+          className={styles.contentLayout}
+          style={{ background: token.colorBgLayout }}
+        >
           {/* Tab 标签页导航 */}
           <TabBar
             tabs={tabs}
@@ -300,11 +333,41 @@ const MainLayout: React.FC = () => {
           <BreadcrumbNav />
 
           {/* 页面内容 */}
-          <Content className={styles.content}>
+          <Content
+            className={styles.content}
+            style={{ background: token.colorBgContainer }}
+          >
             <Outlet />
           </Content>
         </Layout>
       </Layout>
+
+      {/* ===== 系统设置抽屉 ===== */}
+      <Drawer
+        title="系统个性化设置"
+        placement="right"
+        onClose={() => setSettingsVisible(false)}
+        open={settingsVisible}
+        width={300}
+      >
+        <div className={styles.settingItem}>
+          <span>暗黑模式</span>
+          <Switch
+            checked={algorithm === "dark"}
+            onChange={(checked) => setAlgorithm(checked ? "dark" : "light")}
+            checkedChildren={<BulbFilled />}
+            unCheckedChildren={<BulbOutlined />}
+          />
+        </div>
+        <Divider />
+        <div className={styles.settingItem}>
+          <span>紧凑模式</span>
+          <Switch
+            checked={isCompact}
+            onChange={(checked) => setCompact(checked)}
+          />
+        </div>
+      </Drawer>
     </Layout>
   );
 };
