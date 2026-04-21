@@ -14,28 +14,17 @@ import {
 } from "antd";
 import { WarningOutlined } from "@ant-design/icons";
 import AlertCard from "@/components/AlertCard";
+import ChannelModal from "./components/ChannelModal";
+import type { ChannelRecord } from "./components/ChannelModal";
 import type { AlertItem } from "@/components/AlertCard";
 import type { ColumnsType } from "antd/es/table";
+import zhCNPicker from "antd/es/date-picker/locale/zh_CN";
 import styles from "./index.module.scss";
 
 const { RangePicker } = DatePicker;
 
-/** 渠道数据类型 */
-interface ChannelRecord {
-  id: number;
-  name: string;
-  customerCount: number;
-  type: string;
-  creditCode: string;
-  licenseExpiry: string;
-  legalPerson: string;
-  idNumber: string;
-  idExpiry: string;
-  status: "active" | "expired" | "terminated";
-}
-
 /** 模拟数据 */
-const mockData: ChannelRecord[] = [
+const initialData: ChannelRecord[] = [
   {
     id: 1,
     name: "张大大第二...",
@@ -148,21 +137,73 @@ const mockData: ChannelRecord[] = [
 
 const ChannelManagement: React.FC = () => {
   const { token } = theme.useToken();
+  const [data, setData] = useState<ChannelRecord[]>(initialData);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [loading] = useState(false);
-  const [form] = Form.useForm();
+  const [searchForm] = Form.useForm();
+
+  // 弹窗状态
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<"add" | "edit" | "view">("add");
+  const [currRecord, setCurrRecord] = useState<ChannelRecord | null>(null);
+
   // 提醒数据
   const alertItems: AlertItem[] = [
     { label: "近3个月合作到期：", value: "0家", color: "blue" },
     { label: "近1个月合作到期：", value: "0家", color: "blue" },
     { label: "合作已到期：", value: "0家", color: "blue" },
-    { label: "营业执照近3个月到期：", value: "0家", color: "blue" },
+    { label: "营业执照近3个月到期：", value: "2家", color: "blue" },
     { label: "营业执照近1个月到期：", value: "0家", color: "blue" },
-    { label: "营业执照已到期：", value: "0家", color: "blue" },
+    { label: "营业执照已到期：", value: "2家", color: "blue" },
     { label: "身份证近3个月到期：", value: "0家", color: "blue" },
     { label: "身份证近1个月到期：", value: "0家", color: "blue" },
     { label: "身份证已到期：", value: "0家", color: "blue" }
   ];
+
+  // 操作处理
+  const handleAdd = () => {
+    setModalMode("add");
+    setCurrRecord(null);
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = (record: ChannelRecord) => {
+    setModalMode("edit");
+    setCurrRecord(record);
+    setIsModalOpen(true);
+  };
+
+  const handleView = (record: ChannelRecord) => {
+    setModalMode("view");
+    setCurrRecord(record);
+    setIsModalOpen(true);
+  };
+
+  const handleModalOk = (values: any) => {
+    if (modalMode === "add") {
+      const newData: ChannelRecord = {
+        ...values,
+        id: Date.now(),
+        customerCount: 0,
+        status: "active"
+      };
+      setData([newData, ...data]);
+      message.success("新增成功");
+    } else if (modalMode === "edit" && currRecord) {
+      setData(
+        data.map((item) =>
+          item.id === currRecord.id ? { ...item, ...values } : item
+        )
+      );
+      message.success("修改成功");
+    }
+    setIsModalOpen(false);
+  };
+
+  const handleDelete = (id: number) => {
+    setData(data.filter((item) => item.id !== id));
+    message.success("删除成功");
+  };
 
   // 表格列配置
   const columns: ColumnsType<ChannelRecord> = [
@@ -234,12 +275,15 @@ const ChannelManagement: React.FC = () => {
     {
       title: "操作",
       key: "action",
-      width: 220,
+      width: 240,
       fixed: "right",
       render: (_: unknown, record: ChannelRecord) => (
         <Space size={0} separator={<span className={styles.actionDivider} />}>
-          <Button type="link" size="small">
-            查看渠道
+          <Button type="link" size="small" onClick={() => handleView(record)}>
+            查看
+          </Button>
+          <Button type="link" size="small" onClick={() => handleEdit(record)}>
+            编辑
           </Button>
           {record.status === "terminated" ? (
             <Button type="link" size="small">
@@ -252,7 +296,7 @@ const ChannelManagement: React.FC = () => {
           )}
           <Popconfirm
             title="确定删除该渠道吗？"
-            onConfirm={() => message.success("删除成功")}
+            onConfirm={() => handleDelete(record.id)}
             okText="确定"
             cancelText="取消">
             <Button type="link" size="small" danger>
@@ -265,12 +309,13 @@ const ChannelManagement: React.FC = () => {
   ];
 
   const handleSearch = () => {
-    const value = form.getFieldsValue();
+    const value = searchForm.getFieldsValue();
     console.log(value);
+    message.info("开发中：搜索筛选功能");
   };
 
   const handleReset = () => {
-    form.resetFields();
+    searchForm.resetFields();
   };
 
   return (
@@ -280,7 +325,7 @@ const ChannelManagement: React.FC = () => {
 
       {/* 搜索筛选区域 */}
       <div className={styles.searchArea}>
-        <Form form={form}>
+        <Form form={searchForm}>
           <div className={styles.searchRow}>
             <Form.Item name="username" className={styles.searchInput}>
               <Input placeholder="渠道名称/法人/联系人/对接/手机" />
@@ -290,9 +335,9 @@ const ChannelManagement: React.FC = () => {
                 placeholder="渠道类型"
                 allowClear
                 options={[
-                  { value: "personal", label: "个人" },
-                  { value: "enterprise", label: "企业" },
-                  { value: "individual", label: "个体工商户" }
+                  { value: "个人", label: "个人" },
+                  { value: "企业", label: "企业" },
+                  { value: "个体工商户", label: "个体工商户" }
                 ]}
               />
             </Form.Item>
@@ -354,7 +399,7 @@ const ChannelManagement: React.FC = () => {
               />
             </Form.Item>
             <Form.Item name="cooperationRange" className={styles.searchInput}>
-              <RangePicker placeholder={["合作开始日期", "合作结束日期"]} />
+              <RangePicker locale={zhCNPicker} placeholder={["合作开始日期", "合作结束日期"]} />
             </Form.Item>
             <Button type="primary" onClick={handleSearch}>
               查询
@@ -367,7 +412,7 @@ const ChannelManagement: React.FC = () => {
       {/* 操作按钮区域 */}
       <div className={styles.actionArea}>
         <Space>
-          <Button type="primary">新增渠道</Button>
+          <Button type="primary" onClick={handleAdd}>新增渠道</Button>
           <Button>导出选中</Button>
           <Button>导出全部</Button>
         </Space>
@@ -390,7 +435,7 @@ const ChannelManagement: React.FC = () => {
       <Table<ChannelRecord>
         rowKey="id"
         columns={columns}
-        dataSource={mockData}
+        dataSource={data}
         loading={loading}
         rowSelection={{
           selectedRowKeys,
@@ -398,7 +443,7 @@ const ChannelManagement: React.FC = () => {
         }}
         scroll={{ x: 1300 }}
         pagination={{
-          total: 13,
+          total: data.length,
           pageSize: 10,
           showSizeChanger: true,
           showTotal: (total) => `共 ${total} 条`,
@@ -406,6 +451,15 @@ const ChannelManagement: React.FC = () => {
         }}
         size="middle"
         className={styles.dataTable}
+      />
+
+      {/* 业务组件：渠道弹窗 */}
+      <ChannelModal
+        open={isModalOpen}
+        mode={modalMode}
+        initialValues={currRecord}
+        onCancel={() => setIsModalOpen(false)}
+        onOk={handleModalOk}
       />
     </div>
   );

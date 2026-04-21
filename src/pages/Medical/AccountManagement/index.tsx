@@ -16,34 +16,123 @@ import { WarningOutlined } from "@ant-design/icons";
 import styles from "./index.module.scss";
 import type { ColumnsType } from "antd/es/table";
 import ChangeAccountModal from "./components/ChangeAccountModal";
+import ChannelAccountModal from "./components/ChannelAccountModal";
+import type { ChannelRecord } from "./components/ChannelAccountModal";
+
 
 const { RangePicker } = DatePicker;
 
-interface AccountManagementRecord {
-  id: number;
-  name: string;
-  legalPerson: string;
-  type: string;
-  idExpiry: string;
-  phoneNumber: string;
-  contactPerson: string;
-  contactPersonPhone: string;
-  createTime: string;
-  status: string;
-}
+
 const AccountManagement: React.FC = () => {
   const { token } = theme.useToken();
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentRecord, setCurrentRecord] =
-    useState<AccountManagementRecord | null>(null);
+    useState<ChannelRecord | null>(null);
+
+  const initialData: ChannelRecord[] = [
+    {
+      id: 1,
+      name: "百草花",
+      type: "个体工商户",
+      idExpiry: "长期",
+      legalPerson: "克里木·阿布都热衣木江",
+      phoneNumber: "13812345678",
+      status: "active",
+      contactPerson: "张三",
+      contactPersonPhone: "13812345678",
+      createTime: "2022-01-01"
+    },
+    {
+      id: 2,
+      name: "张大大",
+      type: "个人",
+      idExpiry: "长期",
+      legalPerson: "张伟",
+      phoneNumber: "13812345678",
+      status: "active",
+      contactPerson: "张三",
+      contactPersonPhone: "13812345678",
+      createTime: "2022-01-01"
+    },
+    {
+      id: 3,
+      name: "张大大",
+      type: "个人",
+      idExpiry: "长期",
+      legalPerson: "张伟",
+      phoneNumber: "13812345678",
+      status: "active",
+      contactPerson: "张三",
+      contactPersonPhone: "13800000000",
+      createTime: "2022-01-01"
+    },
+    {
+      id: 4,
+      name: "张大大",
+      type: "个人",
+      idExpiry: "长期",
+      legalPerson: "张伟",
+      phoneNumber: "13812345678",
+      status: "active",
+      contactPerson: "张三",
+      contactPersonPhone: "13800000000",
+      createTime: "2022-01-01"
+    }
+  ];
+
+  const [data, setData] = useState<ChannelRecord[]>(initialData);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<'add' | 'edit' | 'view'>('add')
+
+  const handleAddAccount = () => {
+    setModalMode('add')
+    setCurrentRecord(null)
+    setIsAddModalOpen(true);
+  };
+
+  const handleAddModalEdit = (record: ChannelRecord) => {
+    setModalMode("edit");
+    setCurrentRecord(record);
+    setIsAddModalOpen(true);
+  };
+
+  const handleAddModalView = (record: ChannelRecord) => {
+    setModalMode("view");
+    setCurrentRecord(record);
+    setIsAddModalOpen(true);
+  };
+
+  const handleAddModalModalOk = (values: any) => {
+    if (modalMode === 'add') {
+      const newData: ChannelRecord = {
+        ...values,
+        id: Date.now(),
+      };
+      setData([newData, ...data]);
+      message.success("新增成功");
+    } else if (modalMode === "edit" && currentRecord) {
+      setData(
+        data.map((item) =>
+          item.id === currentRecord.id ? { ...item, ...values } : item
+        )
+      );
+      message.success("修改成功");
+    }
+    setIsAddModalOpen(false);
+  }
+
+  const handleAddModalDelete = (id: number) => {
+    setData(data.filter((item) => item.id !== id));
+    message.success("删除成功");
+  };
 
   const handleSearch = () => {
     const value = form.getFieldsValue();
     console.log(value);
   };
 
-  const handleEdit = (record: AccountManagementRecord) => {
+  const handleEdit = (record: ChannelRecord) => {
     setCurrentRecord(record);
     setIsModalOpen(true);
   };
@@ -54,7 +143,7 @@ const AccountManagement: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const columns: ColumnsType<AccountManagementRecord> = [
+  const columns: ColumnsType<ChannelRecord> = [
     {
       title: "渠道名称",
       dataIndex: "name",
@@ -120,8 +209,23 @@ const AccountManagement: React.FC = () => {
       key: "action",
       width: 260,
       fixed: "right",
-      render: (_: unknown, record: AccountManagementRecord) => (
+      render: (_: unknown, record: ChannelRecord) => (
         <Space size={0} separator={<span className={styles.actionDivider} />}>
+          <Button type="link" size="small" onClick={() => handleAddModalView(record)}>
+            查看
+          </Button>
+          <Button type="link" size="small" onClick={() => handleAddModalEdit(record)}>
+            编辑
+          </Button>
+          <Popconfirm
+            title="确定删除该账号吗？"
+            onConfirm={() => handleAddModalDelete(record.id)}
+            okText="确定"
+            cancelText="取消">
+            <Button type="link" size="small" danger>
+              删除
+            </Button>
+          </Popconfirm>
           <Button type="link" size="small" onClick={() => handleEdit(record)}>
             变更
           </Button>
@@ -159,57 +263,6 @@ const AccountManagement: React.FC = () => {
           )}
         </Space>
       )
-    }
-  ];
-
-  const mockData: AccountManagementRecord[] = [
-    {
-      id: 1,
-      name: "百草花",
-      type: "个体工商户",
-      idExpiry: "长期",
-      legalPerson: "克里木·阿布都热衣木江",
-      phoneNumber: "13812345678",
-      status: "active",
-      contactPerson: "张三",
-      contactPersonPhone: "13812345678",
-      createTime: "2022-01-01"
-    },
-    {
-      id: 2,
-      name: "张大大",
-      type: "个人",
-      idExpiry: "长期",
-      legalPerson: "张伟",
-      phoneNumber: "13812345678",
-      status: "active",
-      contactPerson: "张三",
-      contactPersonPhone: "13812345678",
-      createTime: "2022-01-01"
-    },
-    {
-      id: 3,
-      name: "张大大",
-      type: "个人",
-      idExpiry: "长期",
-      legalPerson: "张伟",
-      phoneNumber: "13812345678",
-      status: "active",
-      contactPerson: "张三",
-      contactPersonPhone: "13800000000",
-      createTime: "2022-01-01"
-    },
-    {
-      id: 4,
-      name: "张大大",
-      type: "个人",
-      idExpiry: "长期",
-      legalPerson: "张伟",
-      phoneNumber: "13812345678",
-      status: "active",
-      contactPerson: "张三",
-      contactPersonPhone: "13800000000",
-      createTime: "2022-01-01"
     }
   ];
 
@@ -287,25 +340,33 @@ const AccountManagement: React.FC = () => {
         </Form>
       </div>
 
-      <div
-        className={styles.alertNotice}
-        style={{
-          background: token.colorWarningBg,
-          borderColor: token.colorWarningBorder,
-          color: token.colorWarningText
-        }}>
-        <WarningOutlined className={styles.alertNoticeIcon} />
-        <span>
-          你有 <span className={styles.alertNoticeCount}>2条</span>{" "}
-          缓期中的条款，点击查看
-        </span>
+
+
+      {/* 操作按钮区域 */}
+      <div className={styles.actionArea}>
+        <Space>
+          <Button type="primary" onClick={handleAddAccount} >新增账户</Button>
+        </Space>
+        <div
+          className={styles.alertNotice}
+          style={{
+            background: token.colorWarningBg,
+            borderColor: token.colorWarningBorder,
+            color: token.colorWarningText
+          }}>
+          <WarningOutlined className={styles.alertNoticeIcon} />
+          <span>
+            你有 <span className={styles.alertNoticeCount}>2条</span>{" "}
+            缓期中的条款，点击查看
+          </span>
+        </div>
       </div>
 
       {/* 表格数据 */}
-      <Table<AccountManagementRecord>
+      <Table<ChannelRecord>
         rowKey="id"
         columns={columns}
-        dataSource={mockData}
+        dataSource={data}
         loading={loading}
         scroll={{ x: 1300 }}
         pagination={{
@@ -324,6 +385,14 @@ const AccountManagement: React.FC = () => {
         initialValues={currentRecord}
         onCancel={() => setIsModalOpen(false)}
         onOk={handleModalOk}
+      />
+      {/* 业务组件：账号弹窗 */}
+      <ChannelAccountModal
+        open={isAddModalOpen}
+        mode={modalMode}
+        initialValues={currentRecord}
+        onCancel={() => setIsAddModalOpen(false)}
+        onOk={handleAddModalModalOk}
       />
     </div>
   );

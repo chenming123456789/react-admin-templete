@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { ConfigProvider as AntdConfigProvider, theme, App } from "antd";
-import zhCN from "antd/locale/zh_CN";
-import "dayjs/locale/zh-cn";
+import zhCN from "antd/es/locale/zh_CN";
+
 
 /**
  * 全局配置的类型定义
