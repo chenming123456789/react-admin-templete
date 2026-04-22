@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import React, { createContext, useContext, useState, type ReactNode } from "react";
 import { ConfigProvider as AntdConfigProvider, theme, App } from "antd";
 import zhCN from "antd/es/locale/zh_CN";
 

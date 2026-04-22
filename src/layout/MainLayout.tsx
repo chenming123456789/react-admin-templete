@@ -1,5 +1,16 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Layout, Menu, Dropdown, Avatar, Select, Drawer, Switch, Divider, ColorPicker, theme } from "antd";
+/* eslint-disable react-refresh/only-export-components */
+import React, { useState, useCallback } from "react";
+import {
+  Layout,
+  Menu,
+  Dropdown,
+  Avatar,
+  Select,
+  Drawer,
+  Switch,
+  Divider,
+  theme
+} from "antd";
 import {
   UserOutlined,
   SettingOutlined,
@@ -56,12 +67,7 @@ const MainLayout: React.FC = () => {
   const location = useLocation();
   const userInfo = useUserStore((state) => state.userInfo);
   const logout = useUserStore((state) => state.logout);
-  const {
-    isCompact,
-    algorithm,
-    setCompact,
-    setAlgorithm
-  } = useGlobalConfig();
+  const { isCompact, algorithm, setCompact, setAlgorithm } = useGlobalConfig();
   const { token } = theme.useToken();
 
   const [settingsVisible, setSettingsVisible] = useState(false);
@@ -70,31 +76,32 @@ const MainLayout: React.FC = () => {
   const [tabs, setTabs] = useState<TabItem[]>([
     { key: "/dashboard", label: "工作台", closable: false }
   ]);
-  const [activeTab, setActiveTab] = useState("/dashboard");
+  const activeTab = location.pathname;
 
-  // 路由变化时自动添加 Tab
-  useEffect(() => {
-    const path = location.pathname;
-    const meta = routeMetaMap[path];
+  // 渲染期间同步更新 tabs，避免使用 useEffect 导致的级联渲染警告
+  const [prevPath, setPrevPath] = useState(location.pathname);
+  if (location.pathname !== prevPath) {
+    setPrevPath(location.pathname);
+    const meta = routeMetaMap[location.pathname];
+
     if (meta) {
-      setActiveTab(path);
-      setTabs((prevTabs) => {
-        const exists = prevTabs.find((tab) => tab.key === path);
-        if (!exists) {
-          return [
-            ...prevTabs,
-            { key: path, label: meta.title, closable: path !== "/dashboard" }
-          ];
-        }
-        return prevTabs;
-      });
+      const exists = tabs.find((tab) => tab.key === location.pathname);
+      if (!exists) {
+        setTabs([
+          ...tabs,
+          {
+            key: location.pathname,
+            label: meta.title,
+            closable: location.pathname !== "/dashboard"
+          }
+        ]);
+      }
     }
-  }, [location.pathname]);
+  }
 
   // 点击 Tab
   const handleTabClick = useCallback(
     (key: string) => {
-      setActiveTab(key);
       navigate(key);
     },
     [navigate]
@@ -108,7 +115,6 @@ const MainLayout: React.FC = () => {
         // 如果关闭的是当前激活的 Tab，切换到最后一个
         if (targetKey === activeTab && newTabs.length > 0) {
           const lastTab = newTabs[newTabs.length - 1];
-          setActiveTab(lastTab.key);
           navigate(lastTab.key);
         }
         return newTabs;
@@ -122,7 +128,6 @@ const MainLayout: React.FC = () => {
     (action: "closeOthers" | "closeAll" | "closeRight") => {
       setTabs((prevTabs) => {
         if (action === "closeAll") {
-          setActiveTab("/dashboard");
           navigate("/dashboard");
           return [prevTabs[0]]; // 保留工作台
         }
@@ -242,8 +247,7 @@ const MainLayout: React.FC = () => {
   return (
     <Layout
       className={styles.layoutRoot}
-      style={{ background: token.colorBgLayout }}
-    >
+      style={{ background: token.colorBgLayout }}>
       {/* ===== 顶部导航栏 ===== */}
       <Header
         className={styles.header}
@@ -252,8 +256,7 @@ const MainLayout: React.FC = () => {
             algorithm === "dark"
               ? token.colorBgContainer
               : "linear-gradient(340deg, #307bdf, #307bdfd4)"
-        }}
-      >
+        }}>
         <div className={styles.headerLeft}>
           <div className={styles.logo}>
             <img
@@ -291,8 +294,7 @@ const MainLayout: React.FC = () => {
           </Dropdown>
           <div
             className={styles.settingIcon}
-            onClick={() => setSettingsVisible(true)}
-          >
+            onClick={() => setSettingsVisible(true)}>
             <SettingOutlined />
           </div>
         </div>
@@ -303,8 +305,7 @@ const MainLayout: React.FC = () => {
         <Sider
           width={200}
           className={styles.sider}
-          style={{ background: token.colorBgContainer }}
-        >
+          style={{ background: token.colorBgContainer }}>
           <Menu
             mode="inline"
             selectedKeys={[location.pathname]}
@@ -318,8 +319,7 @@ const MainLayout: React.FC = () => {
         {/* ===== 右侧内容区域 ===== */}
         <Layout
           className={styles.contentLayout}
-          style={{ background: token.colorBgLayout }}
-        >
+          style={{ background: token.colorBgLayout }}>
           {/* Tab 标签页导航 */}
           <TabBar
             tabs={tabs}
@@ -335,8 +335,7 @@ const MainLayout: React.FC = () => {
           {/* 页面内容 */}
           <Content
             className={styles.content}
-            style={{ background: token.colorBgContainer }}
-          >
+            style={{ background: token.colorBgContainer }}>
             <Outlet />
           </Content>
         </Layout>
@@ -348,8 +347,7 @@ const MainLayout: React.FC = () => {
         placement="right"
         onClose={() => setSettingsVisible(false)}
         open={settingsVisible}
-        width={300}
-      >
+        width={300}>
         <div className={styles.settingItem}>
           <span>暗黑模式</span>
           <Switch

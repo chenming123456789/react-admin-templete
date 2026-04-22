@@ -1,17 +1,11 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Table,
-  Space,
-  Form,
-  message,
-  theme
-} from "antd";
+import { Button, Table, Space, Form, message, theme } from "antd";
 import { WarningOutlined } from "@ant-design/icons";
 import AlertCard from "@/components/AlertCard";
 import ChannelModal from "./components/ChannelModal";
 import SearchArea from "./components/SearchArea";
 import { useChannelColumns } from "./hooks/useChannelColumns";
+import { useModal } from "@/hooks/useModal";
 import { useTable } from "@/hooks/useTable";
 import type { ChannelRecord } from "./components/ChannelModal";
 import { initialData } from "./constants";
@@ -21,16 +15,35 @@ import styles from "./index.module.scss";
 const ChannelManagement: React.FC = () => {
   const { token } = theme.useToken();
   const [searchForm] = Form.useForm();
-  
+
   // 使用全局公共 Hook 来统管所有的表格底层状态
   const { tableProps, data, setData, refresh } = useTable<ChannelRecord>({
     defaultData: initialData
   });
 
-  // 弹窗状态
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState<"add" | "edit" | "view">("add");
-  const [currRecord, setCurrRecord] = useState<ChannelRecord | null>(null);
+  // 使用完全解耦的通用弹窗 Hook
+  const { open, mode, record, showModal, hideModal } = useModal<ChannelRecord>();
+
+  const handleModalOk = (values: ChannelRecord) => {
+    if (mode === "add") {
+      const newData: ChannelRecord = {
+        ...values,
+        id: Date.now(),
+        customerCount: 0,
+        status: "active"
+      };
+      setData([newData, ...data]);
+      message.success("新增成功");
+    } else if (mode === "edit" && record) {
+      setData(
+        data.map((item) =>
+          item.id === record.id ? { ...item, ...values } : item
+        )
+      );
+      message.success("修改成功");
+    }
+    hideModal();
+  };
 
   // 提醒数据
   const alertItems: AlertItem[] = [
@@ -47,33 +60,15 @@ const ChannelManagement: React.FC = () => {
 
   // 操作处理
   const handleAdd = () => {
-    setModalMode("add");
-    setCurrRecord(null);
-    setIsModalOpen(true);
+    showModal("add");
   };
 
   const handleEdit = (record: ChannelRecord) => {
-    setModalMode("edit");
-    setCurrRecord(record);
-    setIsModalOpen(true);
+    showModal("edit", record);
   };
 
   const handleView = (record: ChannelRecord) => {
-    setModalMode("view");
-    setCurrRecord(record);
-    setIsModalOpen(true);
-  };
-
-  const handleModalOk = (values: any) => {
-    if (modalMode === "add") {
-      const newData: ChannelRecord = { ...values, id: Date.now(), customerCount: 0, status: "active" };
-      setData([newData, ...data]);
-      message.success("新增成功");
-    } else if (modalMode === "edit" && currRecord) {
-      setData(data.map((item) => (item.id === currRecord.id ? { ...item, ...values } : item)));
-      message.success("修改成功");
-    }
-    setIsModalOpen(false);
+    showModal("view", record);
   };
 
   const handleDelete = (id: number) => {
@@ -104,12 +99,18 @@ const ChannelManagement: React.FC = () => {
       <AlertCard items={alertItems} />
 
       {/* 搜索筛选区域 (已抽离为业务组件) */}
-      <SearchArea form={searchForm} onSearch={handleSearch} onReset={handleReset} />
+      <SearchArea
+        form={searchForm}
+        onSearch={handleSearch}
+        onReset={handleReset}
+      />
 
       {/* 操作按钮区域 */}
       <div className={styles.actionArea}>
         <Space>
-          <Button type="primary" onClick={handleAdd}>新增渠道</Button>
+          <Button type="primary" onClick={handleAdd}>
+            新增渠道
+          </Button>
           <Button>导出选中</Button>
           <Button>导出全部</Button>
         </Space>
@@ -140,10 +141,10 @@ const ChannelManagement: React.FC = () => {
 
       {/* 业务组件：渠道弹窗 */}
       <ChannelModal
-        open={isModalOpen}
-        mode={modalMode}
-        initialValues={currRecord}
-        onCancel={() => setIsModalOpen(false)}
+        open={open}
+        mode={mode}
+        initialValues={record}
+        onCancel={hideModal}
         onOk={handleModalOk}
       />
     </div>
